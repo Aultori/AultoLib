@@ -1,0 +1,17 @@
+Defs:
+
+   CultureDef {
+      defName: fallback
+      label: Human
+      absolutePath: Languages/English/Strings
+      fleshTypes {
+         li:
+      }
+      // doesn't have a culture checker
+      communicationMethods {
+         preferred { li: talking }
+         canInitiate { li: talking }
+         canRecieve { li: talking }
+      }
+   }
+

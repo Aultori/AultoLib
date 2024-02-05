@@ -1,0 +1,66 @@
+Defs:
+
+   InteractionInstanceDef {
+      defName: Human_Chitchat
+      interaction: Chitchat
+
+      interactionDef: Chitchat
+      initiatorCulture: any
+      recipiantCulture: any
+
+      interactionMethod: InteractionMethod_Talking
+   }
+
+   InteractionInstanceDef {
+      defName: Human_DeepTalk
+      interaction: DeepTalk
+
+      interactionDef: DeepTalk
+      initiatorCulture: any
+      recipiantCulture: any
+
+      interactionMethod: InteractionMethod_Talking
+   }
+
+   InteractionInstanceDef {
+      defName: Human_Slight
+      interaction: Slight
+
+      interactionDef: Slight
+      initiatorCulture: any
+      recipiantCulture: any
+
+      interactionMethod: InteractionMethod_Talking
+   }
+
+   InteractionInstanceDef {
+      defName: Human_Insult
+      interaction: Insult
+
+      interactionDef: Insult
+      initiatorCulture: any
+      recipiantCulture: any
+
+      interactionMethod: InteractionMethod_Talking
+   }
+
+   // InteractionInstanceDef {
+   //    defName: Human_KindWords
+   //    interaction: KindWords
+   //    interactionDef: KindWords
+   //    initiatorCulture: any
+   //    recipiantCulture: any
+   //    interactionMethod: InteractionMethod_Talking
+   // }
+
+   // replacement for the normal KindWords
+   InteractionInstanceDef {
+      defName: Generalized_KindWords
+      interaction: KindWords
+
+      interactionDef: KindWords_any_to_any
+      initiatorCulture: any
+      recipiantCulture: any
+
+      interactionMethod: InteractionMethod_Talking
+   }

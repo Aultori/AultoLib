@@ -1,0 +1,10 @@
+Defs:
+   
+   InteractionInstanceDef {
+      defName: HumanRomanceAttempt
+      label: RomanceAttempt
+
+      interactionDef: RomanceAttempt
+      initiatorCulture: fallback
+      recipiantCulture: fallback
+   }
