@@ -16,7 +16,7 @@ namespace AultoLib
     {
         public string Name { get { return "talking"; } }
 
-        public bool PawnCanInitiate(Pawn pawn, CultureDef culture = null)
+        public bool PawnCanInitiate(Pawn pawn, SocietyDef culture = null)
         {
             return pawn.health.capacities.CapableOf(PawnCapacityDefOf.Talking)
                 && pawn.Awake()
@@ -26,7 +26,7 @@ namespace AultoLib
         /// <summary>
         /// Can hear spoken language
         /// </summary>
-        public bool PawnCanRecieve(Pawn pawn, CultureDef culture = null)
+        public bool PawnCanRecieve(Pawn pawn, SocietyDef culture = null)
         {
             return pawn.Awake() && !pawn.IsBurning();
         }

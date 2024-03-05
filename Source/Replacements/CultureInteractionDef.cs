@@ -21,7 +21,7 @@ namespace AultoLib
     /// Instead of there being one InteractionDef(the data) per
     /// InteractionDef(the interaction) like in RimWorld, I now have
     /// multiple sets of data for a single kind of interaction.
-    /// This is because with my Culture System, pawns will interact differently depending on the cultures of the initiator and recipient. I needed to have some way of selecting the correct data depending on the situation.
+    /// This is because with my Society System, pawns will interact differently depending on the cultures of the initiator and recipient. I needed to have some way of selecting the correct data depending on the situation.
     ///
     /// I can't have this Def work like a category, defineing all the InteractionDefs possible, because it'd make it difficult for mods to add more cultures.
     /// Instead, this Def lists the category it belongs to.
@@ -56,9 +56,9 @@ namespace AultoLib
 
         public string category;
 
-        public CultureDef initiatorCulture;
+        public SocietyDef initiatorCulture;
 
-        public CultureDef recepientCulture;
+        public SocietyDef recepientCulture;
 
         /// <summary>
         /// 

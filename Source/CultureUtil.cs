@@ -13,9 +13,9 @@ namespace AultoLib
         /// just to get this working.
         /// In the future, I want to have this list generated at runtime so people can easily add their own cultures.
         /// </summary>
-        public static List<CultureDef> cultureList = new List<CultureDef> { CultureDefOf.vilos, CultureDefOf.fallback };
+      //   public static List<SocietyDef> cultureList = new List<SocietyDef> { SocietyDefOf.vilos, CultureDefOf.fallback };
 
-        public static Dictionary<Pawn,CultureDef> pawnCultures = new Dictionary<Pawn,CultureDef>();
+        public static Dictionary<Pawn,SocietyDef> pawnCultures = new Dictionary<Pawn,SocietyDef>();
 
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace AultoLib
         /// </summary>
         /// <param name="pawn"></param>
         /// <returns></returns>
-        public static CultureDef CultureOf(Pawn pawn)
+        public static SocietyDef CultureOf(Pawn pawn)
         {
             // I could simplify this later
             if (!pawnCultures.ContainsKey(pawn))
@@ -49,12 +49,12 @@ namespace AultoLib
         /// It searches for it from scratch
         /// </summary>
         /// <param name="pawn">the pawn</param>
-        /// <returns>the pawn's CultureDef</returns>
-        private static CultureDef FindCultureOf(Pawn pawn)
+        /// <returns>the pawn's SocietyDef</returns>
+        private static SocietyDef FindCultureOf(Pawn pawn)
         {
-            CultureDef pawnsCulture = null;
+            SocietyDef pawnsCulture = null;
 
-            foreach (CultureDef culture in cultureList)
+            foreach (SocietyDef culture in cultureList)
             {
                 if (culture.HasCulture(pawn))
                     pawnsCulture = culture;

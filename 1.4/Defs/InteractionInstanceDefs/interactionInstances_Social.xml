@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <Def Class="AultoLib.InteractionInstanceDef">
+    <defName>ChitChat_Fallback</defName>
+    <category>ChitChat</category>
+    <label>chit chat</label>
+    <initiatorSociety>any</initiatorSociety>
+    <recipientSociety>any</recipientSociety>
+    <activeSociety>INITIATOR</activeSociety>
+    
+    <symbol>Things/Mote/SpeechSymbols/Chitchat</symbol>
+    <initiatorThought>Chitchat</initiatorThought>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>4</initiatorXpGainAmount>
+    <recipientThought>Chitchat</recipientThought>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [TalkTopicLight].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [TalkTopicLight] with [RECIPIENT_nameDef].</li>
+        <li>r_logentry(p=0.8)->[INITIATOR_nameDef] [commentedabout] [TalkTopicLight] to [RECIPIENT_nameDef].</li>
+        
+        <li>talkedabout(p=4)->chatted about</li>
+        <li>talkedabout->shared a word about</li>
+        <li>talkedabout->spoke about</li>
+        <li>talkedabout->gabbed about</li>
+        <li>talkedabout->talked about</li>
+        <li>talkedabout->quipped about</li>
+        
+        <li>commentedabout->said something about</li>
+        <li>commentedabout->said a word about</li>
+        <li>commentedabout->made a comment about</li>
+        <li>commentedabout->commented about</li>
+        <li>commentedabout->told a joke about</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </Def>
+  
+  
+  <Def Class="AultoLib.InteractionInstanceDef">
+    <defName>DeepTalk_Fallback</defName>
+    <category>DeepTalk</category>
+    <label>deep talk</label>
+    <initiatorSociety>any</initiatorSociety>
+    <recipientSociety>any</recipientSociety>
+    <activeSociety>INITIATOR</activeSociety>
+    
+    <symbol>Things/Mote/SpeechSymbols/Chitchat</symbol>
+    <initiatorThought>DeepTalk</initiatorThought>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <recipientThought>DeepTalk</recipientThought>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+        
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+        
+        <li>subject->[INITIATOR|TalkTopicHeavy]</li>
+        <li>subject->[RECIPIENT|TalkTopicHeavy]</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </Def>
+  
+  
+  <Def Class="AultoLib.InteractionInstanceDef">
+    <defName>Slight_Fallback</defName>
+    <category>Slight</category>
+    <label>slight</label>
+    <initiatorSociety>any</initiatorSociety>
+    <recipientSociety>any</recipientSociety>
+    <activeSociety>INITIATOR</activeSociety>
+    
+    <symbol>Things/Mote/SpeechSymbols/Slight</symbol>
+    <socialFightBaseChance>0.005</socialFightBaseChance>
+    <recipientThought>Slighted</recipientThought>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] [madefunof] [target]'s [RECIPIENT|PersonalCharacteristic].</li>
+        
+        <li>target(p=4)->[RECIPIENT_nameDef]</li>
+        <li>target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]</li>
+        
+        <li>madefunof->made fun of</li>
+        <li>madefunof->disrespected</li>
+        <li>madefunof->subtly scorned</li>
+        <li>madefunof->subtly shamed</li>
+        <li>madefunof->spoke badly of</li>
+        <li>madefunof->spoke negatively of</li>
+        <li>madefunof->laughed at</li>
+        <li>madefunof->sniggered at</li>
+        <li>madefunof->implied negative things about</li>
+        <li>madefunof->belittled</li>
+        <li>madefunof->made a contemptuous remark about</li>
+        <li>madefunof->offered a backhanded compliment about</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </Def>
+  
+  
+  <Def Class="AultoLib.InteractionInstanceDef">
+    <defName>Insult_Fallback</defName>
+    <category>Insult</category>
+    <label>insult</label>
+    <initiatorSociety>any</initiatorSociety>
+    <recipientSociety>any</recipientSociety>
+    <activeSociety>INITIATOR</activeSociety>
+    
+    <symbol>Things/Mote/SpeechSymbols/Insult</symbol>
+    <socialFightBaseChance>0.04</socialFightBaseChance>
+    <recipientThought>Insulted</recipientThought>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry(p=3)->[INITIATOR_nameDef] [insulted] [target]'s [RECIPIENT|PersonalCharacteristic].</li>
+        <li>r_logentry->[INITIATOR_nameDef] compared [target] to a [insultcomparison].</li>
+        <li>r_logentry->[INITIATOR_nameDef] called [target] a [insultcomparison].</li>
+        
+        <li>target(p=4)->[RECIPIENT_nameDef]</li>
+        <li>target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]</li>
+        
+        <li>insulted(p=3)->insulted</li>
+        <li>insulted->openly insulted</li>
+        <li>insulted->loudly insulted</li>
+        <li>insulted->flagrantly insulted</li>
+        <li>insulted->directly insulted</li>
+        <li>insulted->viciously insulted</li>
+        <li>insulted->flagrantly disrespected</li>
+        <li>insulted->slandered</li>
+        <li>insulted->hurled invective about</li>
+        <li>insulted->derided</li>
+        
+        <li>insultcomparison(p=2)->[Animal]</li>
+        <li>insultcomparison->[Enemy]</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </Def>
+  
+  <Def Class="AultoLib.RulesetDef">
+    <defName>Sentence_SocialFightStarted</defName>
+    <society>none</society>
+    <category>none</category>
+    <ruleset>
+      <rulesStrings>
+        <li>sent->This drove [RECIPIENT_nameDef] into a rage and [RECIPIENT_pronoun] began a fight!</li>
+      </rulesStrings>
+    </ruleset>
+  </Def>
+  
+  <!-- make it so pawns can complement skills -->
+  <Def Class="AultoLib.InteractionInstanceDef">
+    <defName>KindWords_Fallback</defName>
+    <category>KindWords</category>
+    <label>kind words</label>
+    <initiatorSociety>any</initiatorSociety>
+    <recipientSociety>any</recipientSociety>
+    <symbol>Things/Mote/SpeechSymbols/KindWords</symbol>
+    <recipientThought>KindWords</recipientThought>
+    <!-- addSkills: true -->
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] [complimented] [RECIPIENT_nameDef]'s [RECIPIENT|PersonalCharacteristic].</li>
+        
+        <li>complimented(p=3)->complimented</li>
+        <li>complimented->praised</li>
+        <li>complimented->commended</li>
+        <li>complimented->lauded</li>
+        <li>complimented->applauded</li>
+        <li>complimented->celebrated</li>
+        <li>complimented->saluted</li>
+        <li>complimented->spoke kindly of</li>
+        <li>complimented->expressed good things about</li>
+        <li>complimented->offered kinds words about</li>
+        <li>complimented->verbally appreciated</li>
+        <li>complimented->expressed appreciation for</li>
+        <li>complimented->said good things about</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </Def>
+</Defs>

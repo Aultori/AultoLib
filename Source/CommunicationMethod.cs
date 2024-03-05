@@ -15,8 +15,8 @@ namespace AultoLib
         /// </summary>
         string Name { get; }
 
-        bool PawnCanInitiate(Pawn pawn, CultureDef culture = null);
+        bool PawnCanInitiate(Pawn pawn, SocietyDef culture = null);
 
-        bool PawnCanRecieve(Pawn pawn, CultureDef culture = null);
+        bool PawnCanRecieve(Pawn pawn, SocietyDef culture = null);
     }
 }

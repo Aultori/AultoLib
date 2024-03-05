@@ -11,14 +11,49 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	  <EmbeddedResource Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	  <None Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Source\CultureUtil.cs" />
+	  <Compile Remove="Source\Database\ResolverData.cs" />
+	  <Compile Remove="Source\Grammar\RuleValidator.cs" />
+	  <Compile Remove="Source\Society\CultureDatabase.cs" />
+	  <Compile Remove="Source\Society\LoadedCultures.cs" />
+	  <Compile Remove="Source\Society\Pawn_InteractionsTracker.cs" />
+	  <Compile Remove="Source\Database\Loader\CulturalFiles_Loader.cs" />
+	  <Compile Remove="Source\Database\Loader\WordFile_Loader.cs" />
+	  <Compile Remove="Source\Grammar\Culture_Rule_File.cs" />
+	  <Compile Remove="Source\Grammar\ExtendedRulePack.cs" />
+	  <Compile Remove="Source\Grammar\ExtendedRulePackDef.cs" />
+	  <Compile Remove="Source\Grammar\OutputSegment.cs" />
+	  <Compile Remove="Source\Grammar\Resolver\NewGrammarRequest.cs" />
+	  <Compile Remove="Source\Grammar\Resolver\RuleResolver.cs" />
+	  <Compile Remove="Source\Grammar\WordRule.cs" />
+	  <Compile Remove="Source\Replacements\PlayLogEntry_Interaction.cs" />
+	  <Compile Remove="Source\Replacements\PlayLogEntry_Interaction_excluded.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="Source\Grammar\Resolver\NewGrammarRequest.cs.exclude" />
+	  <None Remove="Source\Grammar\Resolver\RuleResolver.cs.exclude" />
+	  <None Remove="Source\Grammar\RVC_Rule.cs.exclude" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3704" />
 		<PackageReference Include="Lib.Harmony" Version="2.2.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Folder Include="1.4\Assemblies\" />
-		<Folder Include="SourceDefs\Cultures\" />
-		<Folder Include="SourceDefs\Defs\InteractionDefs\" />
+		<Folder Include="1.4\Defs\SocietyDefs\" />
+		<Folder Include="SourceDefs\Defs\InteractionInstanceDefs\" />
+		<Folder Include="SourceDefs\Defs\Rulesets\" />
+		<Folder Include="Source\Grammar\Resolver\" />
+		<Folder Include="Source\Society\" />
 	</ItemGroup>
 
 </Project>
