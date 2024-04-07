@@ -265,7 +265,7 @@ namespace AultoLib
                     float Y = p.y;
                     if ( Y < 0.0f || 1.0f < Y )
                     {
-                        AultoLibMod.Warning($"{nameToPrintInError} has a point with a y value outside the range of [0.0,1.0]");
+                        Logging.Warning($"{nameToPrintInError} has a point with a y value outside the range of [0.0,1.0]");
                         if (Y < 0.0f) Y = 0.0f;
                         if (1.0  < Y) Y = 1.0f;
                     }
@@ -275,7 +275,7 @@ namespace AultoLib
 
                 if (pointsSquared.Last().y != 0.0f)
                 {
-                    AultoLibMod.Warning($"{nameToPrintInError}'s last point doesn't end in 0.0f. There's a chance for the pawn to communicate over an unlimited distance.");
+                    Logging.Warning($"{nameToPrintInError}'s last point doesn't end in 0.0f. There's a chance for the pawn to communicate over an unlimited distance.");
                 }
 
                 squaredDistances = new SimpleCurve(pointsSquared);

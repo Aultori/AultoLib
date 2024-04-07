@@ -10,7 +10,7 @@ using AultoLib.Database;
 using UnityEngine;
 using Verse.AI;
 
-using static AultoLib.AultoLibLogging;
+using static AultoLib.Logging;
 
 namespace AultoLib
 {
@@ -96,12 +96,13 @@ namespace AultoLib
 
         private static string NameTag(Pawn pawn)
         {
-            return pawn.ToString().ApplyTag(TagType.Name, null).Resolve();
+            //return pawn.ToString().ApplyTag(TagType.Name, null).Resolve();
+            return pawn.ToString().ApplyTag(TagType.Name).Resolve();
         }
 
         public static bool TryInteract(Pawn initiator, Pawn recipient, InteractionCategoryDef category, CommunicationLanguageDef language)
         {
-            Logging.DebugMessage($"{NameTag(initiator)} {initiator.Society()} tries to interact with {NameTag(recipient)} {recipient.Society()}. {category} language: {language}");
+            if (Logging.DoLog()) Logging.DebugMessage($"{NameTag(initiator)} {initiator.Society()} tries to interact with {recipient.ToString().ApplyTag(TagType.Name)} {recipient.Society()}. {category} language: {language}");
 
             if (DebugSettings.alwaysSocialFight)
             {
@@ -109,7 +110,7 @@ namespace AultoLib
             }
             if (initiator == recipient)
             {
-                AultoLibMod.Warning($"{initiator} tried to interact with self. category={category}");
+                Logging.Warning($"{initiator} tried to interact with self. category={category}");
                 return false;
             }
             if (initiator.IsCategoryBlocked(category, isInitiator: true) || recipient.IsCategoryBlocked(category, isInitiator: false))
@@ -118,7 +119,7 @@ namespace AultoLib
             }
             if (!category.ignoreTimeSinceLastInteraction && InteractedTooRecentlyToInteract())
             {
-                AultoLibMod.Error($"{initiator} tried to do interaction category '{category}' to {recipient} only {Find.TickManager.TicksGame - lastInteractionTime} ticks since last interaction {lastInteraction.ToStringSafe<string>()} (min is {const_InteractIntervalAbsoluteMin})");
+                Logging.Error($"{initiator} tried to do interaction category '{category.ColorText("yellow")}' to {recipient} only {Find.TickManager.TicksGame - lastInteractionTime} ticks since last interaction {lastInteraction.ToStringSafe()} (min is {const_InteractIntervalAbsoluteMin})");
                 return false;
             }
 
@@ -189,13 +190,13 @@ namespace AultoLib
 
             if (InteractedTooRecentlyToInteract())
             {
-                AultoLibMod.DebugWarning("Interacted too recently.");
+                Logging.DebugWarning("Interacted too recently.");
                 return false;
             }
 
             if (!CommunicationUtility.CanInitiateSocialInteraction(pawn))
             {
-                AultoLibMod.DebugWarning("Can't initiate social interactions.");
+                Logging.DebugWarning("Can't initiate social interactions.");
                 return false;
             }
 
@@ -241,7 +242,7 @@ namespace AultoLib
             mapPawnsInFaction = new List<Pawn>(pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction));
             mapPawnsInFaction.Shuffle<Pawn>();
 
-            AultoLibMod.DebugMessage("Trying to find a pawn to interact with.");
+            if (Logging.DoLog()) Logging.DebugMessage("Trying to find a pawn to interact with.");
 
             foreach (Pawn recipient in mapPawnsInFaction)
             {
@@ -273,7 +274,7 @@ namespace AultoLib
                 {
                     return true;
                 }
-                else AultoLibMod.Error($"{pawn} failed to interact with {recipient}");
+                else Logging.Error($"{pawn} failed to interact with {recipient}");
             }
             // // randomized map pawns
             // foreach (Pawn recipient in mapPawnsInFaction)

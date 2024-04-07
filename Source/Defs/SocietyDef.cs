@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using Verse;
 
-
 // TODO: a custom pawn generator to generate pawns for specific societies
 
 namespace AultoLib
@@ -95,13 +94,14 @@ namespace AultoLib
 
         public override void ResolveReferences()
         {
+            if (Logging.DoLog()) Logging.Message($"loading {this.ColoredDefInformation()}");
             //Database.SocietyDef_Loader.LoadToDatabase(this.KeyUpper, this);
             Database.GrammarDatabase.loadedSocietyDefs[this.Key] = this;
             Database.SocietyDatabase.AddSociety(this);
             if (this.globalUtility?.ruleset == null)
             {
                 // Log.Error($"{Globals.LOG_HEADER} oops something asdjfhjakshdfahsldkjs... globalUtility doesn't exist");
-                AultoLibMod.Error("this shouldn't be possible. globalUtility's ruleset was null");
+                Logging.Error("this shouldn't be possible. globalUtility's ruleset was null");
             }
             else
             {
@@ -110,7 +110,12 @@ namespace AultoLib
             }
             // DefDatabase<SocietyDef>.Add(this);
             // Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded the {this.defName} SocietyDef");
-            AultoLibMod.DidToDef("loaded to database", this);
+            if (Logging.DoLog())
+            {
+                // string thisDef = Logging.ColorText($"{nameof(AultoLib.SocietyDef)}: {this.defName}", "yellow");
+                // Logging.Message($"loaded {thisDef} to the database");
+                Logging.Message($"loaded {this.ColoredDefInformation()} to the database");
+            }
         }
 
         public static SocietyDef Named(string defName)

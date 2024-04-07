@@ -7,7 +7,6 @@ using Verse;
 using RimWorld;
 using AultoLib.CustomProperties;
 
-using static AultoLib.AultoLibLogging;
 
 namespace AultoLib
 {

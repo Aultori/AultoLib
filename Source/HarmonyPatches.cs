@@ -19,7 +19,7 @@
 
         static HarmonyPatches()
         {
-            AultoLibMod.Message("Starting patching");
+            Logging.Message("Starting patching");
 
             // var harmony = new Harmony("AultoLib.patcher");
             var harmony = new Harmony(id: "AultoLib.patcher");
@@ -58,13 +58,13 @@
 
         public static void TestPrefix()
         {
-            AultoLibMod.Warning("Prefix worked!!");
+            Logging.Warning("Prefix worked!!");
         }
 
         public static void TestTranspiler(Pawn pawn)
         {
-            AultoLibMod.Warning("Transpiler worked!!");
-            AultoLibMod.Warning($"Pawn {pawn.Name} tried to interact");
+            Logging.Warning("Transpiler worked!!");
+            Logging.Warning($"Pawn {pawn.Name} tried to interact");
         }
 
         public static IEnumerable<CodeInstruction> InteractionsTrackerTickTranspiler(IEnumerable<CodeInstruction> instructions)

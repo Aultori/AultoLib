@@ -106,7 +106,7 @@ namespace AultoLib
 
         protected override string ToGameStringFromPOV_Worker(Thing pov, bool forceLog)
         {
-            AultoLibMod.Message("Going To Resolve Something");
+            if (Logging.DoLog()) Logging.Message("Going To Resolve Something");
             if (this.initiator == null || this.recipient == null)
             {
                 Log.ErrorOnce("PlayLogEntry_InteractionInstance has a null pawn reference.", 34422); // I can use the same key since the default one should never get called
@@ -119,18 +119,18 @@ namespace AultoLib
 
             try
             {
-                AultoLibMod.Message("got here while resolving 1");
+                if (Logging.DoLog()) Logging.Message("got here while resolving 1");
                 Constants initiatorConstants = ConstantUtil.EnumerableConstantsForPawn("INITIATOR", this.initiator).ToConstants();
                 Constants recipientConstants = ConstantUtil.EnumerableConstantsForPawn("RECIPIENT", this.recipient).ToConstants();
 
                 string text;
                 ResolverInstance.Reset();
-                AultoLibMod.Message("got here while resolving 1.5");
+                if (Logging.DoLog()) Logging.Message("got here while resolving 1.5");
                 // an error is thrown here
                 ResolverInstance.AddConstants(initiatorConstants);
                 ResolverInstance.AddConstants(recipientConstants);
                 //ResolverInstance.AddConstants(this.extraConstants);
-                AultoLibMod.Message("got here while resolving 2");
+                if (Logging.DoLog()) Logging.Message("got here while resolving 2");
                 ResolverInstance.AddThingSociety("INITIATOR", this.initiatorSociety.Key);
                 ResolverInstance.AddThingSociety("RECIPIENT", this.recipientSociety.Key);
                 ResolverInstance.ExtraTags(this.extraTags);
@@ -139,7 +139,7 @@ namespace AultoLib
                 if (!ResolverInstance.AllConstants.TryGetValue("communicationPrefix", out communicationPrefix))
                     communicationPrefix = "";
 
-                AultoLibMod.Message("got here while resolving 3");
+                Logging.Message("got here while resolving 3");
 
                 if (pov == this.initiator)
                 {
