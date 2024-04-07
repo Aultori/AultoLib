@@ -1,0 +1,14 @@
+Defs:
+
+   Def [Class="AultoLib.SocietyDef"] {
+      defName: fallback
+      label: Fallback
+      globalUtility: GlobalUtility_Fallback
+      absolutePath: Languages/English/Strings
+      // checkable: false
+      checkerClass: AultoLib.SocietyChecker_False
+      fleshTypes {
+         li: Normal
+      }
+   }
+

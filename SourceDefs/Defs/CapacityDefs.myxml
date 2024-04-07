@@ -1,0 +1,44 @@
+Defs:
+
+   // sound produced by something like a speaker
+   PawnCapacityDef {
+      defName: SoundPlayback
+      label: sound playback
+      workerClass: AultoLib.PawnCapacityWorker_SoundPlayback
+      listOrder: 40
+   }
+
+   PawnCapacityDef {
+      defName: Scanning
+      label: scanning
+      workerClass: AultoLib.PawnCapacityWorker_Scanning
+      listOrder: 60
+   }
+
+   PawnCapacityDef {
+      defName: EMReceiving
+      label: EM receiving
+      workerClass: AultoLib.PawnCapacityWorker_EMReceiving
+      listOrder: 70
+   }
+
+   PawnCapacityDef {
+      defName: EMBroadcasting
+      label: EM broadcasting
+      workerClass: AultoLib.PawnCapacityWorker_EMBroadcasting
+      listOrder: 40
+   }
+
+   PawnCapacityDef {
+      defName: Magnetoreception
+      label: magnetoreception
+      workerClass: AultoLib.PawnCapacityWorker_Magnetoreception
+      listOrder: 60
+   }
+
+   PawnCapacityDef {
+      defName: Magnetism
+      label: magnetism
+      workerClass: AultoLib.PawnCapacityWorker_Magnetism
+      listOrder: 60
+   }

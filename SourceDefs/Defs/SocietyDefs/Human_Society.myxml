@@ -1,0 +1,12 @@
+Defs:
+
+   Def <AultoLib.SocietyDef> {
+      defName: human
+      label: Human
+      folderName: Human
+      globalUtility: GlobalUtility_Human
+      fleshTypes {
+         li: Normal
+      }
+   }
+

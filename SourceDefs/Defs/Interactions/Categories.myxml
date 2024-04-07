@@ -1,0 +1,17 @@
+﻿Defs:
+
+   Def <AultoLib.InteractionCategoryDef> {
+      defName: ChitChat
+   }
+   Def <AultoLib.InteractionCategoryDef> {
+      defName: DeepTalk
+   }
+   Def <AultoLib.InteractionCategoryDef> {
+      defName: Slight
+   }
+   Def <AultoLib.InteractionCategoryDef> {
+      defName: Insult
+   }
+   Def <AultoLib.InteractionCategoryDef> {
+      defName: KindWords
+   }

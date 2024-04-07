@@ -23,8 +23,12 @@ namespace AultoLib
             foreach (string error in base.ConfigErrors())
                 yield return error;
 
-            if (this.society == null) yield return "society is null";
-            if (this.category == null) yield return "category is null";
+            // both of these must be set, or neither
+            if (this.society != null || this.category != null)
+            {
+                if (this.society == null) yield return "society is null";
+                if (this.category == null) yield return "category is null";
+            }
             if (this.ruleset == null)                       yield return "ruleset is null";
             if (this.ruleset.includedCategories != null)    yield return "the field ruleset has includedCategories set";
             if (this.ruleset.includedDefs == null)          yield break; // end early. nothing after this needs to be checked
@@ -39,6 +43,8 @@ namespace AultoLib
         // add to database
         public override void ResolveReferences()
         {
+            // if no society or category, don't load to database
+            if (this.society == null || this.category == null) return;
             this.ruleset.societySetByDef = society.ToUpper();
             RulesetDef_Loader.LoadToDatabase(this.society, this.category, this);
         }

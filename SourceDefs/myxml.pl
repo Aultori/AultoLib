@@ -38,6 +38,10 @@ open( $input_fh, "<", $input_file ) or die "Can't open $input_file: $!";
 
 my @linedata = <$input_fh>;
 my $linenumber = 0;
+
+## sometimes there's weird stuff at the beginning of a file, removing that
+$linedata[0] = ($linedata[0] =~ /^\W*(\w.*)$/)[0];
+
 # sub Line {
 #    my $key = shift;
 #    my %dispatch_table = {
@@ -246,7 +250,7 @@ sub syntax_base {{
    #    moveup( [$+{key}, $+{modifier}] ) and next  if $+{modifier}; 
    #    moveup( $+{key} ) and next; 
    # } 
-   if ($line =~ /\G(?<key>\w++) (?:\[(?<modifier>[^\]]++)\])?+ (?:\<(?<class>[^\>]++)\>)?+ (?<nesting> (\/[^\/:{]+)++ )?+ :\s*+$/xgc) {
+   if ($line =~ /\G(?<key>[A-Za-z_.]++) (?:\[(?<modifier>[^\]]++)\])?+ (?:\<(?<class>[^\>]++)\>)?+ (?<nesting> (\/[^\/:{]+)++ )?+ :\s*+$/xgc) {
       my $temp = $+{key};
       $temp = [$+{key}, $+{modifier}]  if $+{modifier}; 
       $temp = [$+{key}, 'Class="'.$+{class}.'"']  if $+{class}; 
@@ -255,7 +259,7 @@ sub syntax_base {{
       moveup_nested( $temp, @nest ) and next; 
    } 
    ## brackets are ignored
-   if ($line =~ /\G(?<key>\w++) \s*+ (?:\[(?<modifier>[^\]]++)\])?+ (?:\<(?<class>[^\>]++)\>)?+ (?<nesting> (\/[^\/:{]+)++ )?+ \s*+ \{?\s* $/xgc) {
+   if ($line =~ /\G(?<key>[A-Za-z_.]++) \s*+ (?:\[(?<modifier>[^\]]++)\])?+ (?:\<(?<class>[^\>]++)\>)?+ (?<nesting> (\/[^\/:{]+)++ )?+ \s*+ \{?\s* $/xgc) {
       my $temp = $+{key};
       $temp = [$+{key}, $+{modifier}]  if $+{modifier}; 
       $temp = [$+{key}, 'Class="'.$+{class}.'"']  if $+{class}; 
@@ -299,7 +303,8 @@ sub syntax_base {{
 ## process the data!
 do {
    syntax_base();
-   die "[syntax error on line $linenumber]".($line =~ /\G.*/)  unless $line =~ /\G\s*$/
+   die "[syntax error on line $linenumber] \"".($line =~ /^(.*?\G.*)$/)[0]."\""  unless $line =~ /\G\s*$/
+#   die "[syntax error on line $linenumber]".($line =~ /\G.*/)  unless $line =~ /\G\s*$/
 } while (advanceline());
 
 push @$ref, @space_stuff; ## add xml comments and stuff

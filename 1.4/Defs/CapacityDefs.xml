@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <!-- sound produced by something like a speaker -->
+  <PawnCapacityDef>
+    <defName>SoundPlayback</defName>
+    <label>sound playback</label>
+    <workerClass>AultoLib.PawnCapacityWorker_SoundPlayback</workerClass>
+    <listOrder>40</listOrder>
+  </PawnCapacityDef>
+  
+  <PawnCapacityDef>
+    <defName>Scanning</defName>
+    <label>scanning</label>
+    <workerClass>AultoLib.PawnCapacityWorker_Scanning</workerClass>
+    <listOrder>60</listOrder>
+  </PawnCapacityDef>
+  
+  <PawnCapacityDef>
+    <defName>EMReceiving</defName>
+    <label>EM receiving</label>
+    <workerClass>AultoLib.PawnCapacityWorker_EMReceiving</workerClass>
+    <listOrder>70</listOrder>
+  </PawnCapacityDef>
+  
+  <PawnCapacityDef>
+    <defName>EMBroadcasting</defName>
+    <label>EM broadcasting</label>
+    <workerClass>AultoLib.PawnCapacityWorker_EMBroadcasting</workerClass>
+    <listOrder>40</listOrder>
+  </PawnCapacityDef>
+  
+  <PawnCapacityDef>
+    <defName>Magnetoreception</defName>
+    <label>magnetoreception</label>
+    <workerClass>AultoLib.PawnCapacityWorker_Magnetoreception</workerClass>
+    <listOrder>60</listOrder>
+  </PawnCapacityDef>
+  
+  <PawnCapacityDef>
+    <defName>Magnetism</defName>
+    <label>magnetism</label>
+    <workerClass>AultoLib.PawnCapacityWorker_Magnetism</workerClass>
+    <listOrder>60</listOrder>
+  </PawnCapacityDef>
+</Defs>

@@ -17,26 +17,38 @@ namespace AultoLib
     // related to individual thinking.
     public class SocietyDef : Def
     {
+
+        public SocietyChecker Checker
+        {
+            get
+            {
+                if (this.checkerInt == null)
+                    this.checkerInt = (SocietyChecker)Activator.CreateInstance(this.checkerClass);
+                return this.checkerInt;
+            }
+        }
+
         /// <summary>
         /// The directory where <see cref="Database.TextFile_Loader"/> looks for files
         /// </summary>
-        public string FolderPath => this.absolutePath ?? $"Socities/{this.folderName}/Strings";
+        public string FolderPath => this.absolutePath ?? $"Societies/{this.folderName}";
 
         /// <summary>
         /// The fullyCapitalized keyword. <para/>
         /// The keyword that represents this society, used in <see cref="AultoLib.InteractionInstanceDef" />
         /// and in the datastructure of <see cref="AultoLib.Database.GrammarDatabase" />
         /// </summary>
-        public string KeyUpper => this.keyUpper ?? (this.keyUpper = this.dataKeyword.ToUpper());
-        /// <summary>
-        /// The lowercase keyword
-        /// </summary>
-        public string KeyLower => this.keyLower ?? (this.keyLower = this.dataKeyword.ToUpper());
+        // public string Key => this.keyUpper ?? (this.keyUpper = this.dataKeyword.ToUpper());
+        public string Key => this.keyUpper ?? (this.keyUpper = this.defName.ToUpper());
+        // /// <summary>
+        // /// The lowercase keyword
+        // /// </summary>
+        // public string KeyLower => this.keyLower ?? (this.keyLower = this.dataKeyword.ToUpper());
 
-        /// <summary>
-        /// keyword with it's first letter capitalized
-        /// </summary>
-        public string KeyCap => this.keyCap ?? (this.keyCap = this.dataKeyword.ToLower().CapitalizeFirst());
+        // /// <summary>
+        // /// keyword with it's first letter capitalized
+        // /// </summary>
+        // public string KeyCap => this.keyCap ?? (this.keyCap = this.dataKeyword.ToLower().CapitalizeFirst());
 
 
         /// <summary>
@@ -48,16 +60,13 @@ namespace AultoLib
         /// otherwise checks the <c>FleshTypeDef</c>s supplied.
         /// Defaults to <c>false</c>.
         /// </returns>
-        public bool hasSociety(Pawn pawn)
+        public bool HasSociety(Pawn pawn)
         {
-            if (this.societyChecker != null)
-            {
-                return this.societyChecker.Check(pawn);
-            }
+            // if (!checkable) return false;
+            if (this.checkerClass != typeof(SocietyChecker))
+                return this.Checker.Check(pawn);
             if (this.fleshTypes.Contains(pawn.RaceProps.FleshType))
-            {
                 return true;
-            }
             return false;
         }
 
@@ -68,14 +77,17 @@ namespace AultoLib
                 yield return error;
             }
 
+            if (this.defName != this.defName.ToLower()) yield return "defName not all lowercase. needed because it's used as a key";
+
             // label is the culture's name
             if (this.label == null) yield return "label is null";
 
-            if (this.dataKeyword == null) yield return "dataKeyword is null";
+            // if (this.dataKeyword == null) yield return "dataKeyword is null";
 
             if (this.globalUtility == null) yield return "globalUtility is null";
 
-            if (this.fleshTypes == null && this.societyChecker == null) yield return "both fleshTypes and societyChecker are null";
+            //if (this.fleshTypes == null && this.checkerClass == null) yield return "both fleshTypes and societyChecker are null";
+            if (this.fleshTypes == null) yield return "fleshTypes is null";
 
             if (this.folderName == null && this.absolutePath == null) yield return "both folderName and absolutePath are null";
 
@@ -83,44 +95,49 @@ namespace AultoLib
 
         public override void ResolveReferences()
         {
-            Database.SocietyDef_Loader.LoadToDatabase(this.KeyUpper, this);
+            //Database.SocietyDef_Loader.LoadToDatabase(this.KeyUpper, this);
+            Database.GrammarDatabase.loadedSocietyDefs[this.Key] = this;
             Database.SocietyDatabase.AddSociety(this);
             if (this.globalUtility?.ruleset == null)
             {
-                Log.Error($"{Globals.LOG_HEADER} oops something asdjfhjakshdfahsldkjs... globalUtility doesn't exist");
+                // Log.Error($"{Globals.LOG_HEADER} oops something asdjfhjakshdfahsldkjs... globalUtility doesn't exist");
+                AultoLibMod.Error("this shouldn't be possible. globalUtility's ruleset was null");
             }
             else
             {
                 // idk. this really should be executed somehow
-                Database.Ruleset_Loader.LoadGlobalRuleset(this.globalUtility.ruleset, this.KeyUpper);
-                Database.Ruleset_Loader.LoadGlobalRuleset(this.globalUtility.ruleset, this.KeyLower);
+                Database.Ruleset_Loader.LoadGlobalRuleset(this.globalUtility.ruleset, this.Key);
             }
             // DefDatabase<SocietyDef>.Add(this);
-            Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded the {this.defName} SocietyDef");
+            // Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded the {this.defName} SocietyDef");
+            AultoLibMod.DidToDef("loaded to database", this);
         }
 
         public static SocietyDef Named(string defName)
         {
-            return DefDatabase<SocietyDef>.GetNamed(defName);
+            try
+            { return DefDatabase<SocietyDef>.GetNamed(defName.ToLower()); }
+            catch
+            { return SocietyDefOf.fallback; }
         }
 
-        public static SocietyDef Get(string society_key)
-        {
-            return Database.SocietyDatabase.GetSocietyDef(society_key);
-        }
+        //public static SocietyDef Get(string society_key)
+        //{
+        //    return Database.SocietyDatabase.GetSocietyDef(society_key);
+        //}
 
-        public override string ToString() => this.KeyUpper;
+        public override string ToString() => this.Key;
 
 
         // +------------------------+
         // |       The Data         |
         // +------------------------+
 
-        /// <summary>
-        /// The keyword that represents this culture, used in <see cref="AultoLib.InteractionInstanceDef" />
-        /// and in the datastructure of <see cref="AultoLib.Database.GrammarDatabase" />
-        /// </summary>
-        private string dataKeyword;
+        // /// <summary>
+        // /// The keyword that represents this culture, used in <see cref="AultoLib.InteractionInstanceDef" />
+        // /// and in the datastructure of <see cref="AultoLib.Database.GrammarDatabase" />
+        // /// </summary>
+        //protected string dataKeyword;
 
         // // things for grammar
         // public string labelPlural;
@@ -138,25 +155,25 @@ namespace AultoLib
         /// <summary>
         /// useful for modders
         /// </summary>
-        public SocietyChecker societyChecker;
+        protected Type checkerClass = typeof(SocietyChecker); // idk how to get this to work
         /// <summary>
         /// The name of the folder that <see cref="Database.TextFile_Loader"/> looks in. (case sensititve)
         /// </summary>
-        private string folderName;
+        protected string folderName;
         /// <summary>
         /// Not required, but needed if the path is not the default one
         /// </summary>
-        private string absolutePath;
+        protected string absolutePath;
 
         // restricting Pawns to communicate in certian languages would make interactions very complicated
         // public List<string> preferredLanguages;
         // public List<string> languages;
 
-        /// <summary>
-        /// communicationMethods.canInitate or communicationMethods.canRecieve:
-        /// lists of preferred <see cref="CommunicationMethod"/> names, strings
-        /// </summary>
-        public CommunicationMethodLists communicationMethods;
+        // /// <summary>
+        // /// communicationMethods.canInitate or communicationMethods.canRecieve:
+        // /// lists of preferred <see cref="CommunicationMethod"/> names, strings
+        // /// </summary>
+        // public CommunicationMethodLists communicationMethods;
 
         // +-------------+
         // |    TODO!    |
@@ -166,27 +183,34 @@ namespace AultoLib
         // they'd also prefer to use the communication methods they like, but their like for people has more weight on their decision
         // they also do things instinctually, like body language
 
+
         public List<string> preferredCommunicationMethods;
 
-        public struct CommunicationMethodLists
-        {
-            /// <summary>
-            /// preferred communicaions methods.
-            /// one of these will be randomly chosen first, so they both happen equally
-            /// </summary>
-            // communication method categories
-            public List<string> preferred;
-            // these are related to the state of the pawn's body
-            public List<string> canInitiate;
-            public List<string> canRecieve;
-        }
+        /// <summary>
+        /// A list of languages in order from most preferred.
+        /// </summary>
+        public List<CommunicationLanguageDef> learnedLanguages;
+
+        // public struct CommunicationMethodLists
+        // {
+        //     /// <summary>
+        //     /// preferred communicaions methods.
+        //     /// one of these will be randomly chosen first, so they both happen equally
+        //     /// </summary>
+        //     // communication method categories
+        //     public List<string> preferred;
+        //     // these are related to the state of the pawn's body
+        //     public List<string> canInitiate;
+        //     public List<string> canRecieve;
+        // }
 
         /// <summary>
         /// if loaded into <see cref="AultoLib.Database.GrammarDatabase"/>
         /// </summary>
         [Unsaved(false)] internal bool loaded = false;
         [Unsaved(false)] private string keyUpper; // capital keyword
-        [Unsaved(false)] private string keyLower; // lowercase keyword
-        [Unsaved(false)] private string keyCap; // keyword with first letter capitalized
+        // [Unsaved(false)] private string keyLower; // lowercase keyword
+        // [Unsaved(false)] private string keyCap; // keyword with first letter capitalized
+        [Unsaved(false)] private SocietyChecker checkerInt;
     }
 }

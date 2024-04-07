@@ -12,34 +12,35 @@
 
 	<ItemGroup>
 	  <Compile Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	  <Compile Remove="Source\Replacements\**" />
 	  <EmbeddedResource Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	  <EmbeddedResource Remove="Source\Replacements\**" />
 	  <None Remove="SourceDefs\Defs\InteractionInstanceDefs_excluded\**" />
+	  <None Remove="Source\Replacements\**" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Source\Culture System\CommunicationCapacities.cs" />
+	  <Compile Remove="Source\Culture System\CommunicationWorker.cs" />
+	  <Compile Remove="Source\Culture System\CommunicationWorker_Talking.cs" />
+	  <Compile Remove="Source\Culture System\Pawn_InteractionInstancesTracker.cs" />
 	  <Compile Remove="Source\CultureUtil.cs" />
-	  <Compile Remove="Source\Database\ResolverData.cs" />
-	  <Compile Remove="Source\Grammar\RuleValidator.cs" />
-	  <Compile Remove="Source\Society\CultureDatabase.cs" />
-	  <Compile Remove="Source\Society\LoadedCultures.cs" />
-	  <Compile Remove="Source\Society\Pawn_InteractionsTracker.cs" />
-	  <Compile Remove="Source\Database\Loader\CulturalFiles_Loader.cs" />
-	  <Compile Remove="Source\Database\Loader\WordFile_Loader.cs" />
-	  <Compile Remove="Source\Grammar\Culture_Rule_File.cs" />
-	  <Compile Remove="Source\Grammar\ExtendedRulePack.cs" />
-	  <Compile Remove="Source\Grammar\ExtendedRulePackDef.cs" />
-	  <Compile Remove="Source\Grammar\OutputSegment.cs" />
-	  <Compile Remove="Source\Grammar\Resolver\NewGrammarRequest.cs" />
-	  <Compile Remove="Source\Grammar\Resolver\RuleResolver.cs" />
-	  <Compile Remove="Source\Grammar\WordRule.cs" />
-	  <Compile Remove="Source\Replacements\PlayLogEntry_Interaction.cs" />
-	  <Compile Remove="Source\Replacements\PlayLogEntry_Interaction_excluded.cs" />
+	  <Compile Remove="Source\Defs\CommunicationRecieverDef.cs" />
+	  <Compile Remove="Source\Defs\CommunicationTransmitterDef.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Database\ResolverData.cs" />
+	  <Compile Remove="Source\Defs\RacePropertiesExtensionAdder.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\RuleValidator.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Database\Loader\CulturalFiles_Loader.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Database\Loader\WordFile_Loader.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\Culture_Rule_File.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\ExtendedRulePack.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\ExtendedRulePackDef.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\OutputSegment.cs" />
+	  <Compile Remove="Source\_NAMESPACES\Grammar\WordRule.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Source\Grammar\Resolver\NewGrammarRequest.cs.exclude" />
-	  <None Remove="Source\Grammar\Resolver\RuleResolver.cs.exclude" />
-	  <None Remove="Source\Grammar\RVC_Rule.cs.exclude" />
+	  <None Remove="Source\_NAMESPACES\Grammar\RVC_Rule.cs.exclude" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,11 +50,15 @@
 
 	<ItemGroup>
 		<Folder Include="1.4\Assemblies\" />
-		<Folder Include="1.4\Defs\SocietyDefs\" />
-		<Folder Include="SourceDefs\Defs\InteractionInstanceDefs\" />
-		<Folder Include="SourceDefs\Defs\Rulesets\" />
-		<Folder Include="Source\Grammar\Resolver\" />
-		<Folder Include="Source\Society\" />
+		<Folder Include="SourceDefs\Societies\" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Microsoft.CSharp" />
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	  <Exec Command="bash SourceDefs/makething.sh" />
+	</Target>
 
 </Project>

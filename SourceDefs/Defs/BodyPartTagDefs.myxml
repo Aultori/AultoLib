@@ -1,0 +1,17 @@
+Defs:
+
+   BodyPartTagDef {
+      defName: ScanningSource
+   }
+
+   BodyPartTagDef {
+      defName: EMReceivingSource
+   }
+
+   BodyPartTagDef {
+      defName: EMBroadcastingSource
+   }
+
+   BodyPartTagDef {
+      defName: MagnetoreceptionSource
+   }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <Def Class="AultoLib.AultoLib_RaceCustomPropertiesDef">
+    <defName>Human</defName>
+    <thingDef>Human</thingDef>
+    <society>human</society>
+    <languages>
+      <li>Common</li>
+    </languages>
+    <communications>
+      <transmitters>
+        <li>
+          <name>speech</name>
+          <medium>Air</medium>
+          <transmitterWorkerClass>AultoLib.CommunicationTransmitterWorker_Vocalization</transmitterWorkerClass>
+          <comfortableDistanceCurve>
+            <points>
+              <li>(0,0.75)</li>
+              <li>(4,1.0)</li>
+              <li>(6,1.0)</li>
+              <li>(8,0.0)</li>
+            </points>
+          </comfortableDistanceCurve>
+        </li>
+      </transmitters>
+      <receivers>
+        <li>
+          <name>hearing</name>
+          <medium>Air</medium>
+          <receiverWorkerClass>AultoLib.CommunicationReceiverWorker_SoundReceiver</receiverWorkerClass>
+          <effectivenessCurve>
+            <points>
+              <li>(0,1.0)</li>
+              <li>(12,1.0)</li>
+              <li>(24,0.0)</li>
+            </points>
+          </effectivenessCurve>
+        </li>
+      </receivers>
+    </communications>
+  </Def>
+</Defs>

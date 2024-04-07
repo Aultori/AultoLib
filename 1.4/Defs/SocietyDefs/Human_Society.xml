@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <Def Class="AultoLib.SocietyDef">
+    <defName>human</defName>
+    <label>Human</label>
+    <folderName>Human</folderName>
+    <globalUtility>GlobalUtility_Human</globalUtility>
+    <fleshTypes>
+      <li>Normal</li>
+      
+    </fleshTypes>
+  </Def>
+</Defs>

@@ -1,0 +1,58 @@
+Defs:
+
+   Def <AultoLib.CommunicationMediumDef>
+      defName: Air
+      workerClass: AultoLib.CommunicationMediumWorker_Air
+   
+   Def <AultoLib.CommunicationMediumDef> 
+      defName: EMWaves
+      workerClass: AultoLib.CommunicationMediumWorker_EMWaves
+
+   Def <AultoLib.CommunicationMediumDef> 
+      defName: MagneticField
+      workerClass: AultoLib.CommunicationMediumWorker_MagneticField
+   
+
+   Def <AultoLib.CommunicationLanguageDef>
+      defName: Common
+      label: Common
+      medium: Air
+      knownByDefault: true
+   
+
+   // Def <AultoLib.CommunicationRecieverDef>
+   //    defName: SoundReciever
+   //    medium: Air
+   //    recieverWorkerClass: AultoLib.CommunicationRecieverWorker_SoundReciever
+
+   // Def <AultoLib.CommunicationRecieverDef>
+   //    defName: EMReciever
+   //    medium: EMWaves
+   //    recieverWorkerClass: AultoLib.CommunicationRecieverWorker_EMReciever
+
+   // Def <AultoLib.CommunicationRecieverDef>
+   //    defName: Magnetoreception
+   //    medium: MagneticField
+   //    recieverWorkerClass: AultoLib.CommunicationRecieverWorker_Magnetoreception
+
+   // Def <AultoLib.CommunicationTransmitterDef>
+   //    defName: SoundPlayback
+   //    medium: Air
+   //    transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_SoundPlayback
+
+   // Def <AultoLib.CommunicationTransmitterDef>
+   //    defName: Vocalization
+   //    medium: Air
+   //    transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Vocalization
+
+   // Def <AultoLib.CommunicationTransmitterDef>
+   //    defName: EMBroadcaster
+   //    medium: EMWaves
+   //    transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_EMBroadcaster
+
+   // Def <AultoLib.CommunicationTransmitterDef>
+   //    defName: Magnetism
+   //    medium: MagneticField
+   //    transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Magnetism
+
+

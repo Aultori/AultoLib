@@ -2,12 +2,12 @@
 using System.Text;
 using RimWorld;
 using Verse;
-using AultoLib;
 using AultoLib.Grammar;
 using AultoLib.Database;
+using AultoLib.CustomProperties;
 using System.Linq;
 
-namespace RimVilos
+namespace AultoLib
 {
     public static class ResolverDebugTests
     {
@@ -24,7 +24,7 @@ namespace RimVilos
         //     List<Pawn> collection = this.pawn.Map.mapPawns.SpawnedPawnsInFaction(this.pawn.Faction);
         // }
 
-        [DebugOutput("RimVilos: Text generation", false)]
+        [DebugOutput("AultoLib: Text generation", false)]
         public static void InteractionInstanceLogTest()
         {
             List<DebugMenuOption> list = new List<DebugMenuOption>();
@@ -51,11 +51,11 @@ namespace RimVilos
             Find.WindowStack.Add(new Dialog_DebugOptionListLister(list));
         }
 
-        [DebugOutput("RimVilos: Text generation", false)]
+        [DebugOutput("AultoLib: Text generation", false)]
         public static void CategoryLog()
         {
             List<DebugMenuOption> list = new List<DebugMenuOption>();
-            using (List<string>.Enumerator enumerator = GrammarDatabase.loadedInteractionInstances.Keys.ToList().GetEnumerator())
+            using (List<string>.Enumerator enumerator = GrammarDatabase.mainInteractionInstances.Keys.ToList().GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
@@ -89,14 +89,14 @@ namespace RimVilos
         private static void TestCategory(StringBuilder stringBuilder, string category, Pawn initiator, Pawn recipient)
         {
             // get the InteractionInstanceDef
-            string initiatorSociety = initiator.Society().KeyUpper;
-            string recipientSociety = recipient.Society().KeyUpper;
+            string initiatorSociety = initiator.Society().Key;
+            string recipientSociety = recipient.Society().Key;
             stringBuilder.AppendLine("---------------------------------------");
 
             InteractionInstanceDef inter;
             if (GrammarDatabase.TryGetInteractionInstance(category, initiatorSociety, recipientSociety, out inter))
             {
-                stringBuilder.AppendLine($"selected InteractionInstanceDef: {inter.defName}");
+                stringBuilder.AppendLine($"selected: {inter.defName}");
                 stringBuilder.AppendLine($"initiator: {initiatorSociety}");
                 stringBuilder.AppendLine($"recipient: {recipientSociety}");
                 stringBuilder.AppendLine("");
@@ -113,7 +113,7 @@ namespace RimVilos
         }
 
 
-        [DebugOutput("RimVilos: Text generation", false)]
+        [DebugOutput("AultoLib: Text generation", false)]
         public static void InteractionInstanceGenerationTest()
         {
             List<DebugMenuOption> list = new List<DebugMenuOption>();
@@ -153,7 +153,7 @@ namespace RimVilos
             if (def.initiatorXpGainSkill != null)  yield return $"initiatorXpGainSkill:  {def.initiatorXpGainSkill.defName}";
             if (def.initiatorXpGainAmount != 0)    yield return $"initiatorXpGainAmount: {def.initiatorXpGainAmount}";
             if (def.recipientThought != null)      yield return $"recipientThought:      {def.recipientThought.defName}";
-            if (def.recipientSpGainSkill != null)  yield return $"recipientSpGainSkill:  {def.recipientSpGainSkill.defName}";
+            if (def.recipientXpGainSkill != null)  yield return $"recipientXpGainSkill:  {def.recipientXpGainSkill.defName}";
             if (def.recipientXpGainAmount != 0)    yield return $"recipientXpGainAmount: {def.recipientXpGainAmount}";
             yield return "";
 
@@ -191,7 +191,6 @@ namespace RimVilos
                     if (rule is ExtendedRule_String rule2) yield return rule2.ToSimpleString();
                 }
             } 
-
 
             yield break;
         }

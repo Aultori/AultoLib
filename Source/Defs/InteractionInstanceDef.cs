@@ -66,7 +66,8 @@ namespace AultoLib
             base.ResolveReferences();
             if (this.interactionMote == null) this.interactionMote = ThingDefOf.Mote_Speech;
             InteractionInstanceDef_Loader.Load(this);
-            Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded the {this.defName} InteractionInstanceDef");
+
+            AultoLibMod.Message("loaded the {this.defName} InteractionInstanceDef");
         }
 
         // public override void PostLoad()
@@ -88,19 +89,20 @@ namespace AultoLib
         // these should actually be strings because some mods might have extra interactions for cultures the user doesn't have the mod for.
         // If that culture doesn't exist, just ignore it.
         /// <summary>
-        /// A string representing the culture. all lowercase. can be "any", in which case it will be looked for last.
+        /// A string representing the society. all lowercase. can be "any", in which case it will be looked for last.
         /// </summary>
         public string initiatorSociety; // self explanitory
         public string recipientSociety; // self explanitory
 
         public string activeSociety;
 
-        /// <summary>
-        /// Communication method classes. Talking, body language, things like that.
-        /// The first one in the list will be checked for first.
-        /// </summary>
-        // I don't need to worry about this right now, since I'm just trying to get the sentence generator working.
-        public List<CommunicationMethod> communicationMethods;
+        // /// <summary>
+        // /// Communication method classes. Talking, body language, things like that.
+        // /// The first one in the list will be checked for first.
+        // /// </summary>
+        // // I don't need to worry about this right now, since I'm just trying to get the sentence generator working.
+        // public List<CommunicationMethod> communicationMethods;
+        // I don't need this at all?
 
 
 
@@ -108,7 +110,7 @@ namespace AultoLib
         // |     The Variables      |
         // +------------------------+
         // private Type workerClass = typeof(InteractionWorker);
-        private readonly Type workerClass = typeof(InteractionInstanceWorker);
+        protected readonly Type workerClass = typeof(InteractionInstanceWorker);
 
 
         public float socialFightBaseChance; // do I want to change how social fights work?
@@ -117,7 +119,7 @@ namespace AultoLib
         public SkillDef   initiatorXpGainSkill;
         public int        initiatorXpGainAmount;
         public ThoughtDef recipientThought;
-        public SkillDef   recipientSpGainSkill;
+        public SkillDef   recipientXpGainSkill;
         public int        recipientXpGainAmount; 
 
         public bool ignoreTimeSinceLastInteraction;
@@ -129,14 +131,14 @@ namespace AultoLib
         /// An optional InteractionInstanceDef to load the rules from.
         /// Helpful if you want to reuse rules, but want different stats and cultures.
         /// </summary>
-        private InteractionInstanceDef interactionInstanceDef;
+        protected InteractionInstanceDef interactionInstanceDef;
 
         public InteractionSymbolSource symbolSource;
         public ThingDef interactionMote;
 
         // I created this class just so I could have these here.
-        private AultoLib.Grammar.Ruleset logRulesInitiator;
-        private AultoLib.Grammar.Ruleset logRulesRecipient;
+        protected AultoLib.Grammar.Ruleset logRulesInitiator;
+        protected AultoLib.Grammar.Ruleset logRulesRecipient;
 
         [Unsaved(false)] private InteractionInstanceWorker workerInt;
         [Unsaved(false)] private Texture2D symbolTex;
