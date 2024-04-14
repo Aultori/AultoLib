@@ -32,12 +32,12 @@ namespace AultoLib
             //    && pawn.ageTracker.CurLifeStage.canInitiateSocialInteraction;  
             if (!CommunicationUtility.CanInitiateAnyInteraction(pawn))
             {
-                if (Logging.DoLog()) Logging.Message("Pawn can't initiate any interaction");
+                if (AultoLog.DoLog()) AultoLog.Message("Pawn can't initiate any interaction");
                 return false;
             }
             if (! (pawn.Society() != null) )
             {
-                Logging.Message("Pawn society was null");
+                AultoLog.Message("Pawn society was null");
                 return false;
             }
 

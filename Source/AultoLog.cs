@@ -21,7 +21,7 @@ namespace AultoLib
         public static readonly string DefName = "#A69564";
     }
 
-    public static class Logging
+    public static class AultoLog
     {
         private static readonly Dictionary<Type, LogData> classLogging = new Dictionary<Type, LogData>();
 
@@ -63,7 +63,7 @@ namespace AultoLib
             {
                 return log;
             }
-            else Logging.SimpleError($"Class \"{C.FullName}\" isn't set up for logging");
+            else AultoLog.SimpleError($"Class \"{C.FullName}\" isn't set up for logging");
             return null;
         }
 
@@ -110,7 +110,7 @@ namespace AultoLib
                 if (tag == null) return true;
                 if (!possibleTags.Contains(tag))
                 {
-                    Logging.Warning($"the tag {tag} wasn't one of \"{ClassType.FullName}\"'s possible tags");
+                    AultoLog.Warning($"the tag {tag} wasn't one of \"{ClassType.FullName}\"'s possible tags");
                     return false;
                 }
                 if (enabledTags.Contains(tag)) return true;
@@ -133,7 +133,7 @@ namespace AultoLib
                 {
                     if (!possibleTags.Contains(tag))
                     {
-                        Logging.Warning($"Can't find tag {tag} in {ClassType.FullName}");
+                        AultoLog.Warning($"Can't find tag {tag} in {ClassType.FullName}");
                     }
                     else
                     {
@@ -165,7 +165,7 @@ namespace AultoLib
             MethodBase caller = new StackTrace().GetFrame(1).GetMethod();
             if (!classLogging.TryGetValue(caller.ReflectedType, out var log))
             {
-                Logging.SimpleErrorOnce($"Class \"{caller.ReflectedType.FullName}\" isn't set up for logging", "ClassNotSetUpForLogging");
+                AultoLog.SimpleErrorOnce($"Class \"{caller.ReflectedType.FullName}\" isn't set up for logging", "ClassNotSetUpForLogging");
                 return false;
             }
             return log.ShouldDoLog(tag);

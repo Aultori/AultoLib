@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <Def Class="AultoLib.SocietyDef">
+    <defName>fallback</defName>
+    <label>Fallback</label>
+    <globalUtility>GlobalUtility_Fallback</globalUtility>
+    <absolutePath>Languages/English/Strings</absolutePath>
+    <!-- checkable: false -->
+    <checkerClass>AultoLib.SocietyChecker_False</checkerClass>
+    <fleshTypes>
+      <li>Normal</li>
+      
+    </fleshTypes>
+  </Def>
+</Defs>

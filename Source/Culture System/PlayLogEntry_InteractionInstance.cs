@@ -12,13 +12,18 @@ namespace AultoLib
     public class PlayLogEntry_InteractionInstance : LogEntry
     {
 
+        public Pawn GetInitiator() => this.initiator;
+        public Pawn GetRecipient() => this.recipient;
+        public PlayLogEntry_Interaction GetLinkedInteraction() => this.linkedInteraction;
+
         protected string InitiatorName => this.initiator?.LabelShort ?? "null";
         protected string RecipientName => this.recipient?.LabelShort ?? "null";
 
-        public PlayLogEntry_InteractionInstance() : base(null) { }
+        public PlayLogEntry_InteractionInstance() : base(null) { this.linkedInteraction = LinkedProperty_PlayLogEntryInteraction.CreateLink(this); }
 
         public PlayLogEntry_InteractionInstance(InteractionInstanceDef intInstDef, Pawn initiator, Pawn recipient, List<RulesetDef> extraRulesets = null, HashSet<string> extraTags = null, Constants extraConstants = null)
         {
+            this.linkedInteraction = LinkedProperty_PlayLogEntryInteraction.CreateLink(this); // so I can use the interaction bubbles
             this.intInstDef = intInstDef;
             this.initiator = initiator;
             this.recipient = recipient;
@@ -106,7 +111,7 @@ namespace AultoLib
 
         protected override string ToGameStringFromPOV_Worker(Thing pov, bool forceLog)
         {
-            if (Logging.DoLog()) Logging.Message("Going To Resolve Something");
+            if (AultoLog.DoLog()) AultoLog.Message("Going To Resolve Something");
             if (this.initiator == null || this.recipient == null)
             {
                 Log.ErrorOnce("PlayLogEntry_InteractionInstance has a null pawn reference.", 34422); // I can use the same key since the default one should never get called
@@ -119,18 +124,18 @@ namespace AultoLib
 
             try
             {
-                if (Logging.DoLog()) Logging.Message("got here while resolving 1");
+                if (AultoLog.DoLog()) AultoLog.Message("got here while resolving 1");
                 Constants initiatorConstants = ConstantUtil.EnumerableConstantsForPawn("INITIATOR", this.initiator).ToConstants();
                 Constants recipientConstants = ConstantUtil.EnumerableConstantsForPawn("RECIPIENT", this.recipient).ToConstants();
 
                 string text;
                 ResolverInstance.Reset();
-                if (Logging.DoLog()) Logging.Message("got here while resolving 1.5");
+                if (AultoLog.DoLog()) AultoLog.Message("got here while resolving 1.5");
                 // an error is thrown here
                 ResolverInstance.AddConstants(initiatorConstants);
                 ResolverInstance.AddConstants(recipientConstants);
                 //ResolverInstance.AddConstants(this.extraConstants);
-                if (Logging.DoLog()) Logging.Message("got here while resolving 2");
+                if (AultoLog.DoLog()) AultoLog.Message("got here while resolving 2");
                 ResolverInstance.AddThingSociety("INITIATOR", this.initiatorSociety.Key);
                 ResolverInstance.AddThingSociety("RECIPIENT", this.recipientSociety.Key);
                 ResolverInstance.ExtraTags(this.extraTags);
@@ -139,7 +144,7 @@ namespace AultoLib
                 if (!ResolverInstance.AllConstants.TryGetValue("communicationPrefix", out communicationPrefix))
                     communicationPrefix = "";
 
-                Logging.Message("got here while resolving 3");
+                if (AultoLog.DoLog()) AultoLog.Message("got here while resolving 3");
 
                 if (pov == this.initiator)
                 {
@@ -247,5 +252,7 @@ namespace AultoLib
 
         public Faction initiatorFaction; 
         public Ideo initiatorIdeo;
+
+        private PlayLogEntry_Interaction linkedInteraction; // doesn't contain anything, but can be used to find this interaction instance
     }
 }

@@ -1,0 +1,28 @@
+BetterLoading] Exception occurred processing mod finalize events! Details: System.TypeInitializationException: The type initializer for 'AultoLib.HarmonyPatches' threw an exception. ---> System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation. ---> System.ArgumentException: opcode
+  at Mono.Cecil.Cil.Instruction.Create (Mono.Cecil.Cil.OpCode opcode, System.String value) [0x00019] in <255414689d344b1385ae719f6cce8c55>:0 
+  at Mono.Cecil.Cil.ILProcessor.Create (Mono.Cecil.Cil.OpCode opcode, System.String value) [0x00000] in <255414689d344b1385ae719f6cce8c55>:0 
+  at MonoMod.Utils.Cil.CecilILGenerator.Emit (System.Reflection.Emit.OpCode opcode, System.String arg) [0x0000e] in <255414689d344b1385ae719f6cce8c55>:0 
+  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)
+  at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] in <eae584ce26bc40229c1b1aa476bfa589>:0 
+   --- End of inner exception stack trace ---
+  at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00048] in <eae584ce26bc40229c1b1aa476bfa589>:0 
+  at System.Reflection.MethodBase.Invoke (System.Object obj, System.Object[] parameters) [0x00000] in <eae584ce26bc40229c1b1aa476bfa589>:0 
+  at MonoMod.Utils.Cil.ILGeneratorShimExt.DynEmit (System.Reflection.Emit.ILGenerator il, System.Object[] emitArgs) [0x00085] in <255414689d344b1385ae719f6cce8c55>:0 
+  at MonoMod.Utils.Cil.ILGeneratorShimExt.DynEmit (System.Reflection.Emit.ILGenerator il, System.Reflection.Emit.OpCode opcode, System.Object operand) [0x00000] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.MethodBodyReader+<>c__DisplayClass24_0.<FinalizeILCodes>b__2 (HarmonyLib.CodeInstruction codeInstruction) [0x00180] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.CollectionExtensions.Do[T] (System.Collections.Generic.IEnumerable`1[T] sequence, System.Action`1[T] action) [0x00014] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.MethodBodyReader.FinalizeILCodes (HarmonyLib.Emitter emitter, System.Collections.Generic.List`1[T] transpilers, System.Collections.Generic.List`1[T] endLabels, System.Boolean& hasReturnCode) [0x00203] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.MethodCopier.Finalize (HarmonyLib.Emitter emitter, System.Collections.Generic.List`1[T] endLabels, System.Boolean& hasReturnCode) [0x00000] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.MethodPatcher.CreateReplacement (System.Collections.Generic.Dictionary`2[System.Int32,HarmonyLib.CodeInstruction]& finalInstructions) [0x002be] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.PatchFunctions.UpdateWrapper (System.Reflection.MethodBase original, HarmonyLib.PatchInfo patchInfo) [0x00057] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.PatchProcessor.Patch () [0x000fc] in <255414689d344b1385ae719f6cce8c55>:0 
+  at HarmonyLib.Harmony.Patch (System.Reflection.MethodBase original, HarmonyLib.HarmonyMethod prefix, HarmonyLib.HarmonyMethod postfix, HarmonyLib.HarmonyMethod transpiler, HarmonyLib.HarmonyMethod finalizer) [0x00028] in <255414689d344b1385ae719f6cce8c55>:0 
+  at AultoLib.HarmonyPatches..cctor () [0x000af] in <53d2f9685f974ac1b1489a2e687526c3>:0 
+   --- End of inner exception stack trace ---
+  at (wrapper managed-to-native) System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(intptr)
+  at System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor (System.RuntimeTypeHandle type) [0x0002a] in <eae584ce26bc40229c1b1aa476bfa589>:0 
+  at BetterLoading.Stage.InitialLoad.StageRunStaticCctors+<StaticConstructAll>d__20.MoveNext () [0x00093] in <b495b1ef983f4b72acee6b0ef4cb6acc>:0 
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+Verse.Log:Error (string)
+BetterLoading.Stage.InitialLoad.StageRunStaticCctors/<StaticConstructAll>d__20:MoveNext ()
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr)

@@ -7,7 +7,7 @@ then
    cd SourceDefs
 fi
 
-TARGETDIR="../1.4"
+TARGETDIR="../1.5"
 
 error=0
 

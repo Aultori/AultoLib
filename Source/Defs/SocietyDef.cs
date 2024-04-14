@@ -94,14 +94,14 @@ namespace AultoLib
 
         public override void ResolveReferences()
         {
-            if (Logging.DoLog()) Logging.Message($"loading {this.ColoredDefInformation()}");
+            if (AultoLog.DoLog()) AultoLog.Message($"loading {this.ColoredDefInformation()}");
             //Database.SocietyDef_Loader.LoadToDatabase(this.KeyUpper, this);
             Database.GrammarDatabase.loadedSocietyDefs[this.Key] = this;
             Database.SocietyDatabase.AddSociety(this);
             if (this.globalUtility?.ruleset == null)
             {
                 // Log.Error($"{Globals.LOG_HEADER} oops something asdjfhjakshdfahsldkjs... globalUtility doesn't exist");
-                Logging.Error("this shouldn't be possible. globalUtility's ruleset was null");
+                AultoLog.Error("this shouldn't be possible. globalUtility's ruleset was null");
             }
             else
             {
@@ -110,11 +110,11 @@ namespace AultoLib
             }
             // DefDatabase<SocietyDef>.Add(this);
             // Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded the {this.defName} SocietyDef");
-            if (Logging.DoLog())
+            if (AultoLog.DoLog())
             {
                 // string thisDef = Logging.ColorText($"{nameof(AultoLib.SocietyDef)}: {this.defName}", "yellow");
                 // Logging.Message($"loaded {thisDef} to the database");
-                Logging.Message($"loaded {this.ColoredDefInformation()} to the database");
+                AultoLog.Message($"loaded {this.ColoredDefInformation()} to the database");
             }
         }
 

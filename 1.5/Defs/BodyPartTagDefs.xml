@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?><Defs>
+  
+  <BodyPartTagDef>
+    <defName>ScanningSource</defName>
+  </BodyPartTagDef>
+  
+  <BodyPartTagDef>
+    <defName>EMReceivingSource</defName>
+  </BodyPartTagDef>
+  
+  <BodyPartTagDef>
+    <defName>EMBroadcastingSource</defName>
+  </BodyPartTagDef>
+  
+  <BodyPartTagDef>
+    <defName>MagnetoreceptionSource</defName>
+  </BodyPartTagDef>
+</Defs>

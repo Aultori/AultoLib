@@ -22,40 +22,47 @@ namespace AultoLib.Grammar
                 expansion = null;
                 return false;
             }
-            if (Logging.DoLog()) Logging.Message($"Trying to resolve {debugLabel}");
+            if (AultoLog.DoLog()) AultoLog.Message($"Trying to resolve {debugLabel}");
 
             //AultoLog.DebugMessage_Advanced($"got CompoundRule {compoundRule.keyword}");
             // get the segments, then call ExpandRecurive(segments)
             HashSet<string> something = new HashSet<string>();
             ExtendedRule rule = compoundRule.RandomPossiblyResolvableEntry(something);
-            if (Logging.DoLog("debug1")) Logging.DebugMessage($"got rule {rule.keyword}");
+            if (AultoLog.DoLog("debug1")) AultoLog.DebugMessage($"got rule {rule.keyword}");
             RuleSegments segs = rule.GetSegments();
-            if (Logging.DoLog("debug1")) Logging.DebugMessage("got segments");
+            if (AultoLog.DoLog("debug1")) AultoLog.DebugMessage("got segments");
             // test segmetns
 
             logSb = new StringBuilder();
             // if (Logging.DoLog("showSteps")) logSb.AppendLine($"Trying to resolve {debugLabel}");
-            if (Logging.DoLog("showSteps")) logSb.AppendLine("==== attempting expansion ====");
+            if (AultoLog.DoLog("showSteps")) logSb.AppendLine("==== attempting expansion ====");
 
-            try
-            {
-                expansion = ExpandRecursive(segs).ToString();
-            }
-            catch (Exception e) { throw e; }
-            finally
-            {
-                if (Logging.DoLog("showSteps")) Logging.Message(logSb.ToString());
-            }
+             // expansion = ExpandRecursive(segs).ToString(); // breaks
+             StringBuilder sb = new StringBuilder();
+             try
+             {
+                 foreach (string part in ExpandRecursive(segs))
+                 {
+                     sb.Append(part);
+                 }
+             }
+             catch (Exception e) { throw e; }
+             finally
+             {
+                 expansion = sb.ToString();
+                 if (AultoLog.DoLog("showSteps")) AultoLog.Message(logSb.ToString());
+             }
 
-            // StringBuilder sb = new StringBuilder();
-            // foreach (string part in ExpandRecursive(segs))
-            // {
-            //     sb.Append(part);
-            // }
-            // expansion = sb.ToString();
+             // StringBuilder sb = new StringBuilder();
+             // foreach (string part in ExpandRecursive(segs))
+             // {
+             //     sb.Append(part);
+             // }
+             // expansion = sb.ToString();
+             // AultoLog.Message(expansion);
 
             // wouldn't have gotten here if there was an error
-            if (Logging.DoLog()) Logging.DebugMessage("expansion successful");
+            if (AultoLog.DoLog()) AultoLog.DebugMessage("expansion successful");
             return true;
         }
 
@@ -85,17 +92,17 @@ namespace AultoLib.Grammar
         private static IEnumerable<string> ExpandRecursive(int r, RuleSegments segments, HashSet<string> encounteredTags)
         {
             loopCount++;
-            if (Logging.DoLog("showSteps")) logSb.AppendLine($"DOING RECURSION: level {r}, loop {loopCount}, segments: \"{segments}\"");
+            if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"DOING RECURSION: level {r}, loop {loopCount}, segments: \"{segments}\"");
 
             if (loopCount > MAX_LOOPS)
             {
                 // Log.Error($"{Globals.LOG_HEADER} Max loops reached");
-                Logging.Error("Max loops reached");
+                AultoLog.Error("Max loops reached");
                 yield break;
             }
             if (r > MAX_RECURSIONS)
             {
-                Logging.Error("Max recursions reached");
+                AultoLog.Error("Max recursions reached");
                 yield break;
             }
 
@@ -103,7 +110,7 @@ namespace AultoLib.Grammar
             {
                 if (seg.isMacro)
                 {
-                    if (Logging.DoLog("showSteps")) logSb.AppendLine($"expanding segment \"{seg}\"");
+                    if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"expanding segment \"{seg}\"");
                     yield return seg.text;
                     if (TryExpandMacro(seg.macro, out CompoundRule compoundRule))
                     {
@@ -112,11 +119,11 @@ namespace AultoLib.Grammar
 
                         if (rule == null)
                         {
-                            if (Logging.DoLog("showSteps")) logSb.AppendLine($"selected rule, but it was null");
+                            if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"selected rule, but it was null");
                             yield break;
                         }
 
-                        if (Logging.DoLog("showSteps")) logSb.AppendLine($"selected rule {rule.keyword}");
+                        if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"selected rule {rule.keyword}");
 
                         // process tags
                         HashSet<string> newTags = new HashSet<string>();
@@ -130,7 +137,7 @@ namespace AultoLib.Grammar
 
                         // expand rule
                         RuleSegments segs = rule.GetSegments();
-                        if (Logging.DoLog("showSteps")) logSb.AppendLine($"got segments: {segs}");
+                        if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"got segments: {segs}");
 
                         // expand segments
                         foreach (string s in ExpandRecursive(r + 1, segs, newTags))
@@ -145,7 +152,7 @@ namespace AultoLib.Grammar
                 }
                 else
                 {
-                    if (Logging.DoLog("showSteps")) logSb.AppendLine($"expanding text \"{seg}\"");
+                    if (AultoLog.DoLog("showSteps")) logSb.AppendLine($"expanding text \"{seg}\"");
                     yield return seg.text;
                 }
             }

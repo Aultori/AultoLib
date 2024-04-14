@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Verse;
 
-using static AultoLib.Logging;
+using static AultoLib.AultoLog;
 
 namespace AultoLib
 {
@@ -17,7 +17,7 @@ namespace AultoLib
 
         public AultoLibMod(ModContentPack content) : base(content)
         {
-            Logging.Message("Hello from AultoLib!");
+            AultoLog.Message("Hello from AultoLib!");
             AultoLibMod.LoggingConfig();
         }
 
@@ -25,12 +25,16 @@ namespace AultoLib
         {
             SetupLogging(typeof(AultoLib.Database.ResolverInstance), false);
             SetupLogging(typeof(AultoLib.Database.TextFile_Loader), true);
-            SetupLogging(typeof(AultoLib.Grammar.MacroResolver), true)
+            SetupLogging(typeof(AultoLib.Grammar.Ruleset), false);
+            SetupLogging(typeof(AultoLib.Grammar.MacroResolver), false)
                 .PossibleTags("debug1", "showSteps") 
                 .SetTags(true, "debug1");
-            SetupLogging(typeof(AultoLib.AultoLib_Pawn_InteractionsTracker), true);
+            SetupLogging(typeof(AultoLib.AultoLib_Pawn_InteractionsTracker), false);
+            SetupLogging(typeof(AultoLib.PlayLogEntry_InteractionInstance), false);
             SetupLogging(typeof(AultoLib.CommunicationUtility), true);
             SetupLogging(typeof(AultoLib.SocietyDef), true);
+
+            SetupLogging(typeof(AultoLib.HarmonyPatches), true);
         }
 
         // +---------------+

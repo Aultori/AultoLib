@@ -11,6 +11,8 @@
     using Verse;
     using System.Reflection;
     using static HarmonyLib.Code;
+    using AultoLib.CustomProperties;
+    using UnityEngine;
 
     [StaticConstructorOnStartup]
     public static class HarmonyPatches
@@ -19,7 +21,7 @@
 
         static HarmonyPatches()
         {
-            Logging.Message("Starting patching");
+            AultoLog.Message("Starting patching");
 
             // var harmony = new Harmony("AultoLib.patcher");
             var harmony = new Harmony(id: "AultoLib.patcher");
@@ -31,6 +33,10 @@
 
             harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.InteractionsTrackerTick)),
                 transpiler: new HarmonyMethod(patchType, nameof(InteractionsTrackerTickTranspiler)));
+
+            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubbler), nameof(Bubbles.Core.Bubbler.Add)), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_Add_Transpiler)));
+            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetText"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
+            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetFade"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
 
 
         }
@@ -58,13 +64,13 @@
 
         public static void TestPrefix()
         {
-            Logging.Warning("Prefix worked!!");
+            AultoLog.Warning("Prefix worked!!");
         }
 
         public static void TestTranspiler(Pawn pawn)
         {
-            Logging.Warning("Transpiler worked!!");
-            Logging.Warning($"Pawn {pawn.Name} tried to interact");
+            AultoLog.Warning("Transpiler worked!!");
+            AultoLog.Warning($"Pawn {pawn.Name} tried to interact");
         }
 
         public static IEnumerable<CodeInstruction> InteractionsTrackerTickTranspiler(IEnumerable<CodeInstruction> instructions)
@@ -104,80 +110,123 @@
             yield return new CodeInstruction(OpCodes.Stfld, AccessTools.Field(typeof(Pawn_InteractionsTracker), "lastInteraction"));
             yield return new CodeInstruction(OpCodes.Ret);
 
-            // Label jumpToEnd = il.DefineLabel();
-
-
-            // yield return CodeInstruction.LoadField(typeof(Pawn_InteractionsTracker), "pawn");
-            // yield return CodeInstruction.Call(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.LoadPawn));
-            // yield return new CodeInstruction(OpCodes.Stsfld, AccessTools.Field(typeof(AultoLib_Pawn_InteractionsTracker), "pawn"));
-            // yield return CodeInstruction.StoreField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.pawn));
-            // yield return CodeInstruction.LoadField(typeof(Pawn_InteractionsTracker), "wantsRandomInteract");
-            // yield return CodeInstruction.StoreField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.wantsRandomInteract));
-            // yield return CodeInstruction.LoadField(typeof(Pawn_InteractionsTracker), "lastInteraction");
-            // yield return CodeInstruction.StoreField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.lastInteraction));
-            // yield return CodeInstruction.LoadField(typeof(Pawn_InteractionsTracker), "lastInteractionTime");
-            // yield return CodeInstruction.StoreField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.lastInteractionTime));
-            // yield return new CodeInstruction(OpCodes.Ldarg_0);
-            // yield return CodeInstruction.Call(typeof(Pawn_InteractionsTracker), "get_CurrentSocialMode");
-            // yield return CodeInstruction.StoreField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.currentSocialMode));
-
-            // yield return CodeInstruction.Call(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.InteractionsTrackerTick));
-
-            // yield return CodeInstruction.LoadField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.wantsRandomInteract));
-            // yield return CodeInstruction.StoreField(typeof(Pawn_InteractionsTracker), "wantsRandomInteract");
-            // yield return CodeInstruction.LoadField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.lastInteraction));
-            // yield return CodeInstruction.StoreField(typeof(Pawn_InteractionsTracker), "lastInteraction");
-            // yield return CodeInstruction.LoadField(typeof(AultoLib_Pawn_InteractionsTracker), nameof(AultoLib_Pawn_InteractionsTracker.lastInteractionTime));
-            // yield return CodeInstruction.StoreField(typeof(Pawn_InteractionsTracker), "lastInteractionTime");
-
-            // yield return new CodeInstruction(OpCodes.Ret);
-            // yield return new CodeInstruction(OpCodes.Nop) { labels = new List<Label> { jumpToEnd } };
-
-
             foreach (CodeInstruction instruction in instructions)
                 yield return instruction;
         }
-        // /* (64,9)-(64,10) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x0000306C 00           */ IL_0000: nop
-        // /* (65,13)-(65,64) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x0000306D 02           */ IL_0001: ldarg.0
-        // /* 0x0000306E 7B69000004   */ IL_0002: ldfld     class ['Assembly-CSharp']Verse.Pawn AultoLib._Pawn_InteractionsTracker_edits::pawn
-        // /* 0x00003073 8008000004   */ IL_0007: stsfld    class ['Assembly-CSharp']Verse.Pawn AultoLib.AultoLib_Pawn_InteractionsTracker::pawn
-        // /* (66,13)-(66,89) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x00003078 02           */ IL_000C: ldarg.0
-        // /* 0x00003079 7B6A000004   */ IL_000D: ldfld     bool AultoLib._Pawn_InteractionsTracker_edits::wantsRandomInteract
-        // /* 0x0000307E 8009000004   */ IL_0012: stsfld    bool AultoLib.AultoLib_Pawn_InteractionsTracker::wantsRandomInteract
-        // /* (67,13)-(67,94) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x00003083 02           */ IL_0017: ldarg.0
-        // /* 0x00003084 7B6B000004   */ IL_0018: ldfld int32 AultoLib._Pawn_InteractionsTracker_edits::lastInteractionTime
-        // /* 0x00003089 800A000004   */ IL_001D: stsfld int32 AultoLib.AultoLib_Pawn_InteractionsTracker::lastInteractionTime
-        // /* (68,13)-(68,86) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x0000308E 02           */ IL_0022: ldarg.0
-        // /* 0x0000308F 7B6C000004   */ IL_0023: ldfld     string AultoLib._Pawn_InteractionsTracker_edits::lastInteraction
-        // /* 0x00003094 800B000004   */ IL_0028: stsfld    string AultoLib.AultoLib_Pawn_InteractionsTracker::lastInteraction
-        // /* (69,13)-(69,90) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x00003099 02           */ IL_002D: ldarg.0
-        // /* 0x0000309A 28B3000006   */ IL_002E: call instance valuetype['Assembly-CSharp'] RimWorld.RandomSocialMode AultoLib._Pawn_InteractionsTracker_edits::get_CurrentSocialMode()
-        // /* 0x0000309F 8007000004   */ IL_0033: stsfld valuetype ['Assembly-CSharp'] RimWorld.RandomSocialMode AultoLib.AultoLib_Pawn_InteractionsTracker::currentSocialMode
-        // /* (70,13)-(70,73) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030A4 2814000006   */ IL_0038: call      void AultoLib.AultoLib_Pawn_InteractionsTracker::InteractionsTrackerTick()
-        // /* 0x000030A9 00           */ IL_003D: nop
-        // /* (71,13)-(71,94) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030AA 02           */ IL_003E: ldarg.0
-        // /* 0x000030AB 7E09000004   */ IL_003F: ldsfld    bool AultoLib.AultoLib_Pawn_InteractionsTracker::wantsRandomInteract
-        // /* 0x000030B0 7D6A000004   */ IL_0044: stfld     bool AultoLib._Pawn_InteractionsTracker_edits::wantsRandomInteract
-        // /* (72,13)-(72,94) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030B5 02           */ IL_0049: ldarg.0
-        // /* 0x000030B6 7E0A000004   */ IL_004A: ldsfld int32 AultoLib.AultoLib_Pawn_InteractionsTracker::lastInteractionTime
-        // /* 0x000030BB 7D6B000004   */ IL_004F: stfld int32 AultoLib._Pawn_InteractionsTracker_edits::lastInteractionTime
-        // /* (73,13)-(73,86) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030C0 02           */ IL_0054: ldarg.0
-        // /* 0x000030C1 7E0B000004   */ IL_0055: ldsfld    string AultoLib.AultoLib_Pawn_InteractionsTracker::lastInteraction
-        // /* 0x000030C6 7D6C000004   */ IL_005A: stfld     string AultoLib._Pawn_InteractionsTracker_edits::lastInteraction
-        // /* (74,13)-(74,20) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030CB 2B00         */ IL_005F: br.s IL_0061
 
-        // /* (115,9)-(115,10) C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\AultoLib\Source\_Pawn_InteractionsTracker_edits.cs */
-        // /* 0x000030CD 2A           */ IL_0061: ret
+
+        public static IEnumerable<CodeInstruction> Bubbles_Add_Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator ilg)
+        {
+            LocalBuilder interactionInstanceLocal = ilg.DeclareLocal(typeof(AultoLib.PlayLogEntry_InteractionInstance));
+            MethodInfo interactionInstance_GetInitiator = AccessTools.Method(typeof(PlayLogEntry_InteractionInstance), nameof(AultoLib.PlayLogEntry_InteractionInstance.GetInitiator));
+            MethodInfo interactionInstance_GetRecipient = AccessTools.Method(typeof(PlayLogEntry_InteractionInstance), nameof(AultoLib.PlayLogEntry_InteractionInstance.GetRecipient));
+            MethodInfo interactionInstance_GetLinkedInteraction = AccessTools.Method(typeof(PlayLogEntry_InteractionInstance), nameof(AultoLib.PlayLogEntry_InteractionInstance.GetLinkedInteraction));
+            // MethodInfo interactionInstance_CreateLink = AccessTools.Method(typeof(LinkedProperty_PlayLogEntryInteraction), nameof(LinkedProperty_PlayLogEntryInteraction.CreateLink));
+            // MethodInfo interaction_GetInteractionInstance = AccessTools.Method(typeof(AultoLib.CustomProperties.LinkedProperty_PlayLogEntryInteraction), nameof(LinkedProperty_PlayLogEntryInteraction.GetInteractionInstance));
+
+            FieldInfo bubblesGetInitiator = AccessTools.Field(typeof(Bubbles.Access.Reflection), nameof(Bubbles.Access.Reflection.Verse_PlayLogEntry_Interaction_Initiator));
+            FieldInfo bubblesGetRecipient = AccessTools.Field(typeof(Bubbles.Access.Reflection), nameof(Bubbles.Access.Reflection.Verse_PlayLogEntry_Interaction_Recipient));
+
+            Label gotoRet = ilg.DefineLabel();
+            Label skipRet = ilg.DefineLabel();
+
+            // if (AultoLog.DoLog()) AultoLog.Message("Patching Bubbles Add");
+
+            List<CodeInstruction> instructionList = instructions.ToList();
+            for (int i = 0; i < instructionList.Count; i++)
+            {
+                if (instructionList[i].Is(OpCodes.Call, AccessTools.Method(typeof(Bubbles.Core.Bubbler), "ShouldShow")))
+                {
+                    AultoLog.Message("debug1");
+                    yield return instructionList[i];
+                    // IL_0005: brfalse.s   IL_0011
+                    // IL_0007: ldarg.0
+                    // IL_0008: isinst      ['Assembly-CSharp']Verse.PlayLogEntry_Interaction
+                    // IL_000D: stloc.0
+                    // IL_000E: ldloc.0
+                    // IL_000F: brtrue.s    IL_0012
+                    // IL_0011: ret
+                    i += 7;
+                    yield return new CodeInstruction(OpCodes.Brfalse, gotoRet);
+
+                    // if (AultoLog.DoLog()) yield return new CodeInstruction(OpCodes.Ldstr, "entered Add");
+                    // if (AultoLog.DoLog()) yield return CodeInstruction.Call(typeof(AultoLog), nameof(AultoLog.Message), new[] { typeof(string) });
+
+                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Isinst, typeof(AultoLib.PlayLogEntry_InteractionInstance));
+                    yield return new CodeInstruction(OpCodes.Stloc, interactionInstanceLocal.LocalIndex);
+                    // if (AultoLog.DoLog()) yield return new CodeInstruction(OpCodes.Ldstr, "Got here1");
+                    // if (AultoLog.DoLog()) yield return CodeInstruction.Call(typeof(AultoLog), nameof(AultoLog.Message), new[] { typeof(string) });
+                    yield return new CodeInstruction(OpCodes.Ldloc, interactionInstanceLocal.LocalIndex);
+                    yield return new CodeInstruction(OpCodes.Brtrue, skipRet);
+
+                    yield return new CodeInstruction(OpCodes.Ret).WithLabels(gotoRet);
+
+                    yield return new CodeInstruction(OpCodes.Ldloc, interactionInstanceLocal.LocalIndex).WithLabels(skipRet);
+                    // if (AultoLog.DoLog()) yield return new CodeInstruction(OpCodes.Ldstr, "Made it past the return");
+                    // if (AultoLog.DoLog()) yield return CodeInstruction.Call(typeof(AultoLog), nameof(AultoLog.Message), new[] { typeof(string) });
+                    // yield return new CodeInstruction(OpCodes.Call, interactionInstance_CreateLink); // do this??, or whenever one is created, so the ticks are correct
+                    yield return new CodeInstruction(OpCodes.Call, interactionInstance_GetLinkedInteraction);
+                    yield return new CodeInstruction(OpCodes.Stloc_0);
+
+                    // if (AultoLog.DoLog()) yield return new CodeInstruction(OpCodes.Ldstr, "Got here3");
+                    // if (AultoLog.DoLog()) yield return CodeInstruction.Call(typeof(AultoLog), nameof(AultoLog.Message), new[] { typeof(string) });
+
+                    continue;
+                }
+                if (instructionList[i].Is(OpCodes.Ldsfld, bubblesGetInitiator))
+                {
+                    AultoLog.Message("debug2");
+                    yield return new CodeInstruction(OpCodes.Ldloc, interactionInstanceLocal.LocalIndex);
+                    yield return new CodeInstruction(OpCodes.Call, interactionInstance_GetInitiator);
+                    // yield return CodeInstruction.Call(typeof(PlayLogEntry_InteractionInstance), nameof(AultoLib.PlayLogEntry_InteractionInstance.GetInitiator));
+                    yield return new CodeInstruction(OpCodes.Stloc_1);
+                    i += 4;
+                    continue;
+                }
+                if (instructionList[i].Is(OpCodes.Ldsfld, bubblesGetRecipient))
+                {
+                    AultoLog.Message("debug3");
+                    // yield return new CodeInstruction(OpCodes.Ldloc_0);
+                    yield return new CodeInstruction(OpCodes.Ldloc, interactionInstanceLocal.LocalIndex);
+                    // yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    // yield return new CodeInstruction(OpCodes.Call, nameof(AultoLib.PlayLogEntry_InteractionInstance.GetRecipient));
+                    // yield return CodeInstruction.Call(typeof(PlayLogEntry_InteractionInstance), nameof(AultoLib.PlayLogEntry_InteractionInstance.GetRecipient));
+                    yield return new CodeInstruction(OpCodes.Call, interactionInstance_GetRecipient);
+                    yield return new CodeInstruction(OpCodes.Stloc_2);
+                    i += 4;
+                    continue;
+                }
+                // if (instructionList[i].Is(OpCodes.Newobj, AccessTools.Constructor(typeof(Bubbles.Core.Bubble), new[] {typeof(Verse.Pawn), typeof(Verse.PlayLogEntry_Interaction)} )))
+                // {
+                //     yield return new CodeInstruction(OpCodes.Newobj, AccessTools.Constructor(typeof(Bubbles.Core.Bubble), new[] {typeof(Verse.Pawn), typeof(Verse.LogEntry)} ));
+                //     continue;
+                // }
+                yield return instructionList[i];
+            }
+        }
+
+        // used multiple times
+        public static IEnumerable<CodeInstruction> Bubbles_ReplaceEntryWithInteractionInstance_Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+            // if (AultoLog.DoLog()) AultoLog.Message("Doing Replace Entry");
+            // LocalBuilder interactionInstanceLocal = ilg.DeclareLocal(typeof(AultoLib.PlayLogEntry_InteractionInstance));
+            MethodInfo interaction_GetInteractionInstance = AccessTools.Method(typeof(AultoLib.CustomProperties.LinkedProperty_PlayLogEntryInteraction), nameof(LinkedProperty_PlayLogEntryInteraction.GetInteractionInstance));
+
+            List<CodeInstruction> instructionList = instructions.ToList();
+            for (int i = 0; i < instructionList.Count; i++)
+            {
+                // if (instructionList[i].opcode == OpCodes.Ldarg_0 && instructionList[i + 1].Is(OpCodes.Call, "get_Entry"))
+                if (instructionList[i].Is(OpCodes.Call, AccessTools.Method(typeof(Bubbles.Core.Bubble), "get_Entry")))
+                // if (instructionList[i].opcode == OpCodes.Ldarg_0 && instructionList[i + 1].opcode == OpCodes.Call)
+                {
+                    yield return instructionList[i];
+                    yield return new CodeInstruction(OpCodes.Call, interaction_GetInteractionInstance);
+                    continue;
+                }
+                yield return instructionList[i];
+            }
+        }
     }
+
 }

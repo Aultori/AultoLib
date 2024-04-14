@@ -18,7 +18,7 @@ namespace AultoLib.Database
             if (path.NullOrEmpty())
             {
                 // Log.Error($"{Globals.LOG_HEADER} TextFile_Loader.TryGetContents(...)  path is null");
-                Logging.Error("TryGetContents() path is null");
+                AultoLog.Error("TryGetContents() path is null");
                 rawText = null;
                 return false;
             }
@@ -34,14 +34,14 @@ namespace AultoLib.Database
                 return true;
             }
 
-            if (Logging.DoLog()) Logging.Message($"file {path} not found in {societyDef.ColoredDefInformation()}");
+            if (AultoLog.DoLog()) AultoLog.Message($"file {path} not found in {societyDef.ColoredDefInformation()}");
             // look for it in the fallback society
             if (!DataIsLoaded(SocietyDefOf.fallback.Key))
                 TextFile_Loader.Load(SocietyDefOf.fallback);
             if (GrammarDatabase.loadedTextFiles[SocietyDefOf.fallback.Key]?.TryGetValue(path, out rawText) == true)
                 return true;
 
-            Logging.Error($"could not find {societyDef.FolderPath}/{path}");
+            AultoLog.Error($"could not find {societyDef.FolderPath}/{path}");
             rawText = null;
             return false;
         }
@@ -142,13 +142,13 @@ namespace AultoLib.Database
             // I might not need this
             if (!DataIsLoaded(society.Key))
             {
-                Logging.Error($"Error executing TryRegisterFileIfNew(...): the key for SocietyDef {society.defName} doesn't exist in GrammarDatabase. It should already exist! something went wrong");
+                AultoLog.Error($"Error executing TryRegisterFileIfNew(...): the key for SocietyDef {society.defName} doesn't exist in GrammarDatabase. It should already exist! something went wrong");
                 return false;
             }
 #endif
             if (!filePath.StartsWith(modDir.folder))
             {
-                Logging.Error($"Failed to get a relative path for a file of society {society.defName}: {filePath}, located in {modDir.folder}");
+                AultoLog.Error($"Failed to get a relative path for a file of society {society.defName}: {filePath}, located in {modDir.folder}");
                 return false;
             }
             string item = filePath.Substring(modDir.folder.Length);
@@ -173,7 +173,7 @@ namespace AultoLib.Database
             }
             catch (Exception ex)
             {
-                Logging.Error($"Exception from loading strings file {file}: {ex}");
+                AultoLog.Error($"Exception from loading strings file {file}: {ex}");
                 return;
             }
             string shortPath = file.FullPath;

@@ -7,7 +7,7 @@
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<RootNamespace>AultoLib</RootNamespace>
-		<OutputPath>1.4/Assemblies</OutputPath>
+		<OutputPath>1.5/Assemblies</OutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -37,6 +37,7 @@
 	  <Compile Remove="Source\_NAMESPACES\Grammar\ExtendedRulePackDef.cs" />
 	  <Compile Remove="Source\_NAMESPACES\Grammar\OutputSegment.cs" />
 	  <Compile Remove="Source\_NAMESPACES\Grammar\WordRule.cs" />
+	  <Compile Remove="Source\_Pawn_InteractionsTracker_edits.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,7 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.4.3704" />
+		<PackageReference Include="Krafs.Rimworld.Ref" Version="1.5.4063" />
 		<PackageReference Include="Lib.Harmony" Version="2.2.2" />
 	</ItemGroup>
 
@@ -54,6 +55,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Reference Include="Bubbles">
+	    <HintPath>..\..\..\..\workshop\content\294100\1516158345\Assemblies\Bubbles.dll</HintPath>
+	  </Reference>
 	  <Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 

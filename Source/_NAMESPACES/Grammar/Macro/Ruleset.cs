@@ -198,10 +198,10 @@ namespace AultoLib.Grammar
 
         public void ResolveReferences()
         {
-            if (Logging.DoLog()) Logging.Message($"resolving references");
+            if (AultoLog.DoLog()) AultoLog.Message($"resolving references");
             if (this.rulesStrings == null && this.rulesFiles == null)
             {
-                Logging.Error($"Cannot resolve the references of a Ruleset with no {nameof(rulesStrings)} or {nameof(rulesFiles)} to resolve");
+                AultoLog.Error($"Cannot resolve the references of a Ruleset with no {nameof(rulesStrings)} or {nameof(rulesFiles)} to resolve");
                 return;
             }
             // loads things into rulesPlusDefs
@@ -238,7 +238,7 @@ namespace AultoLib.Grammar
             // if (this.rulesStrings != null || this.rulesFiles != null)
             if (this.isReadonly)
             {
-                Logging.Error("Cannot add to a Ruleset that's set to readonly");
+                AultoLog.Error("Cannot add to a Ruleset that's set to readonly");
                 return false;
             }
             return true;

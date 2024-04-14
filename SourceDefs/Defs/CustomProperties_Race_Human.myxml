@@ -8,6 +8,12 @@ Defs:
          li: Common
       }
       communications {
+         languages {
+            li {
+               languageDef: Common
+               mediums { li: Air }
+            }
+         }
          transmitters {
             li {
                name: speech

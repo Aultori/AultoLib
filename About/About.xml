@@ -18,7 +18,7 @@
 		<li>brrainz.harmony</li>
 	</loadAfter>
 	<supportedVersions>
-		<li>1.4</li>
+		<li>1.5</li>
 	</supportedVersions>
 	<packageId>aultori.AultoLib</packageId>
 	<description>core library for RimVilos and other mods</description>

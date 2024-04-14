@@ -67,7 +67,7 @@ namespace AultoLib
             if (this.interactionMote == null) this.interactionMote = ThingDefOf.Mote_Speech;
             InteractionInstanceDef_Loader.Load(this);
 
-            Logging.Message($"loaded {Logging.ColoredDefInformation(this)} to the database");
+            AultoLog.Message($"loaded {AultoLog.ColoredDefInformation(this)} to the database");
         }
 
         // public override void PostLoad()
