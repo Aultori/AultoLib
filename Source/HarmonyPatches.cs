@@ -28,16 +28,16 @@
 
             // harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.TryInteractWith)),
             //     prefix: new HarmonyMethod(patchType, nameof(TestPrefix)));
-            harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.TryInteractWith)),
-                transpiler: new HarmonyMethod(patchType, nameof(TryInteractWithTranspiler)));
+            _= harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.TryInteractWith)), transpiler: new HarmonyMethod(patchType, nameof(TryInteractWithTranspiler)));
+            _= harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.InteractionsTrackerTick)), transpiler: new HarmonyMethod(patchType, nameof(InteractionsTrackerTickTranspiler)));
 
-            harmony.Patch(AccessTools.Method(typeof(Pawn_InteractionsTracker), nameof(Pawn_InteractionsTracker.InteractionsTrackerTick)),
-                transpiler: new HarmonyMethod(patchType, nameof(InteractionsTrackerTickTranspiler)));
+            //_= harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubbler), nameof(Bubbles.Core.Bubbler.Add)), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_Add_Transpiler)));
+            //_= harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetText"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
+            //_= harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetFade"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
 
-            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubbler), nameof(Bubbles.Core.Bubbler.Add)), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_Add_Transpiler)));
-            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetText"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
-            harmony.Patch(AccessTools.Method(typeof(Bubbles.Core.Bubble), "GetFade"), transpiler: new HarmonyMethod(patchType, nameof(Bubbles_ReplaceEntryWithInteractionInstance_Transpiler)));
+            Compatability.Init(harmony);
 
+            Compatability.InteractionBubblesPatches.DoPatchingIfLoaded();
 
         }
 
@@ -115,6 +115,7 @@
         }
 
 
+        /*
         public static IEnumerable<CodeInstruction> Bubbles_Add_Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator ilg)
         {
             LocalBuilder interactionInstanceLocal = ilg.DeclareLocal(typeof(AultoLib.PlayLogEntry_InteractionInstance));
@@ -227,6 +228,7 @@
                 yield return instructionList[i];
             }
         }
+        */
     }
 
 }

@@ -4,9 +4,6 @@ Defs:
       defName: Human
       thingDef: Human
       society: human
-      languages {
-         li: Common
-      }
       communications {
          languages {
             li {

@@ -4,9 +4,6 @@
     <defName>Human</defName>
     <thingDef>Human</thingDef>
     <society>human</society>
-    <languages>
-      <li>Common</li>
-    </languages>
     <communications>
       <languages>
         <li>

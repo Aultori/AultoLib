@@ -14,7 +14,7 @@ namespace AultoLib.Database
 
         private static void CheckAssignment(string name, string op, string rawString)
         {
-            if (op != "=") Log.Error($"{Globals.LOG_HEADER} Attempt to compare {name} instead of assigning in rule {rawString}");
+            if (op != "=") AultoLog.Error($"Attempt to compare {name} instead of assigning in rule {rawString}");
         }
 
         public static bool TryBuildRule(string rawString, ExtendedRule rule, out string contents)
@@ -25,7 +25,7 @@ namespace AultoLib.Database
 
             if (!match.Success)
             {
-                Log.Error($"{Globals.LOG_HEADER} Bad string pass when reading rule {rawString}");
+                AultoLog.Error($"Bad string pass when reading rule {rawString}");
                 contents = null;
                 return false;
             }
@@ -55,11 +55,11 @@ namespace AultoLib.Database
                     break;
                 case "tag":
                     CheckAssignment(name, op, value);
-                    Log.Warning($"{Globals.LOG_HEADER} use of 'tag' is depricated");
+                    AultoLog.Warning($"use of 'tag' is depricated");
                     break;
                 case "requiredTag":
                     CheckAssignment(name, op, value);
-                    Log.Warning($"{Globals.LOG_HEADER} use of 'requiredTag' is depricated");
+                    AultoLog.Warning($"use of 'requiredTag' is depricated");
                     break;
                 case "uses":
                     CheckAssignment(name, op, value);
@@ -67,7 +67,7 @@ namespace AultoLib.Database
                     break;
                 case "debug":
                     #if !DEBUG
-                    Log.Error($"{Globals.LOG_HEADER} Rule '{value}' contains debug flag; fix before commit");
+                    AultoLog.Error($"Rule '{value}' contains debug flag; fix before commit");
                     #endif
                     break;
                 default:

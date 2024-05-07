@@ -43,7 +43,7 @@ namespace AultoLib
                         for (int i = 0; i < 100; i++)
                         {
                             PlayLogEntry_InteractionInstance playLogEntry_Interaction = new PlayLogEntry_InteractionInstance(def, pawn, recipient);
-                            stringBuilder.AppendLine(playLogEntry_Interaction.ToGameStringFromPOV(pawn, false));
+                            _= stringBuilder.AppendLine(playLogEntry_Interaction.ToGameStringFromPOV(pawn, false));
                         }
                         Log.Message(stringBuilder.ToString());
                     }));
@@ -92,24 +92,25 @@ namespace AultoLib
             // get the InteractionInstanceDef
             string initiatorSociety = initiator.Society().Key;
             string recipientSociety = recipient.Society().Key;
-            stringBuilder.AppendLine("---------------------------------------");
+            _=stringBuilder.AppendLine("---------------------------------------");
 
             InteractionInstanceDef inter;
             if (GrammarDatabase.TryGetInteractionInstance(category, initiatorSociety, recipientSociety, out inter))
             {
-                stringBuilder.AppendLine($"selected: {inter.defName}");
-                stringBuilder.AppendLine($"initiator: {initiatorSociety}");
-                stringBuilder.AppendLine($"recipient: {recipientSociety}");
-                stringBuilder.AppendLine("");
+                _=stringBuilder
+                .AppendLine($"selected: {inter.defName}")
+                .AppendLine($"initiator: {initiatorSociety}")
+                .AppendLine($"recipient: {recipientSociety}")
+                .AppendLine("");
                 for (int i = 0; i < 16; i++)
                 {
                     PlayLogEntry_InteractionInstance playLogEntry_Interaction = new PlayLogEntry_InteractionInstance(inter, initiator, recipient);
-                    stringBuilder.AppendLine(playLogEntry_Interaction.ToGameStringFromPOV(initiator, false));
+                    _=stringBuilder.AppendLine(playLogEntry_Interaction.ToGameStringFromPOV(initiator, false));
                 }
             }
             else
             {
-                stringBuilder.AppendLine($"Error, interaction instance not found for {initiatorSociety} {recipientSociety}");
+                _=stringBuilder.AppendLine($"Error, interaction instance not found for {initiatorSociety} {recipientSociety}");
             }
         }
 
@@ -126,7 +127,7 @@ namespace AultoLib
                     list.Add(new DebugMenuOption(def.defName, DebugMenuOptionMode.Action, delegate ()
                     {
                         StringBuilder stringBuilder = new StringBuilder();
-                        foreach (string str in InteractionInstanceStats(def)) stringBuilder.AppendLine(str);
+                        foreach (string str in InteractionInstanceStats(def)) _=stringBuilder.AppendLine(str);
 
                         Log.Message(stringBuilder.ToString());
                     }));

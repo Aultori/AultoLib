@@ -6,35 +6,71 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Verse;
+using HarmonyLib;
 
 using static AultoLib.AultoLog;
+using UnityEngine;
 
 namespace AultoLib
 {
     public class AultoLibMod : Mod
     {
+        public const string Id      = "AultoLib";
+        public const string Name    = "AultoLib";
+        public const string Version = "0.0";
 
+        public static AultoLibSettings settings;
+        public static Mod Instance;
 
         public AultoLibMod(ModContentPack content) : base(content)
         {
+            Instance = this;
+            settings = GetSettings<AultoLibSettings>();
+
             AultoLog.Message("Hello from AultoLib!");
             AultoLibMod.LoggingConfig();
         }
 
         public static void LoggingConfig()
         {
-            SetupLogging(typeof(AultoLib.Database.ResolverInstance), false);
-            SetupLogging(typeof(AultoLib.Database.TextFile_Loader), true);
-            SetupLogging(typeof(AultoLib.Grammar.Ruleset), false);
-            SetupLogging(typeof(AultoLib.Grammar.MacroResolver), false)
+            _=SetupLogging(typeof(AultoLib.Database.ResolverInstance), false);
+            _=SetupLogging(typeof(AultoLib.Database.TextFile_Loader), true);
+            _=SetupLogging(typeof(AultoLib.Grammar.Ruleset), false);
+            _=SetupLogging(typeof(AultoLib.Grammar.MacroResolver), false)
                 .PossibleTags("debug1", "showSteps") 
                 .SetTags(true, "debug1");
-            SetupLogging(typeof(AultoLib.AultoLib_Pawn_InteractionsTracker), false);
-            SetupLogging(typeof(AultoLib.PlayLogEntry_InteractionInstance), false);
-            SetupLogging(typeof(AultoLib.CommunicationUtility), true);
-            SetupLogging(typeof(AultoLib.SocietyDef), true);
+            _=SetupLogging(typeof(AultoLib.AultoLib_Pawn_InteractionsTracker), false);
+            _=SetupLogging(typeof(AultoLib.PlayLogEntry_InteractionInstance), false);
+            _=SetupLogging(typeof(AultoLib.CommunicationUtility), true);
+            _=SetupLogging(typeof(AultoLib.SocietyDef), true);
 
-            SetupLogging(typeof(AultoLib.HarmonyPatches), true);
+            _=SetupLogging(typeof(AultoLib.HarmonyPatches), true);
+        }
+
+        /// <summary>
+        /// The (optional) GUI part to set your settings.
+        /// </summary>
+        /// <param name="inRect">A Unity Rect with the size of the settings window.</param>
+        public override void DoSettingsWindowContents(Rect inRect)
+        {
+            Listing_Standard listingStandard = new Listing_Standard();
+            listingStandard.Begin(inRect);
+            listingStandard.CheckboxLabeled("Interactions Enabled", ref settings.interactions, tooltip: "tooltiptooltiptooltiptooltiptooltiptooltip");
+            listingStandard.CheckboxLabeled("Interaction Header", ref settings.doInteractionHeader, tooltip: "Add extra information about the interaction to the begging of a pawn's interaction text.");
+            //listingStandard.Label("exampleFloatExplanation");
+            //settings.exampleFloat = listingStandard.Slider(settings.exampleFloat, 100f, 300f);
+            listingStandard.End();
+            base.DoSettingsWindowContents(inRect);
+        }
+
+        /// <summary>
+        /// Override SettingsCategory to show up in the list of settings.
+        /// Using .Translate() is optional, but does allow for localisation.
+        /// </summary>
+        /// <returns>The (translated) mod name.</returns>
+        public override string SettingsCategory()
+        {
+            return "AultoLib";
         }
 
         // +---------------+

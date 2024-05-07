@@ -19,6 +19,18 @@ namespace AultoLib
         public static readonly string ClassName = "#C09A1B";
         public static readonly string Def = "#AA7F00";
         public static readonly string DefName = "#A69564";
+
+        /// <summary>
+        /// text must be some object that implements ToString<br/>
+        /// some colors and their names here: https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/StyledText.html#ColorNames
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public static string ColorText(this object text, string color)
+        {
+            return $"<color=\"{color}\">{text}</color>";
+        }
     }
 
     public static class AultoLog
@@ -121,7 +133,7 @@ namespace AultoLib
             {
                 foreach (string tag in possibleTags)
                 {
-                    this.possibleTags.Add(tag);
+                    _=this.possibleTags.Add(tag);
                 }
                 return this;
             }
@@ -137,8 +149,8 @@ namespace AultoLib
                     }
                     else
                     {
-                        if (toEnable) enabledTags.Add(tag);
-                        else enabledTags.Remove(tag);
+                        if (toEnable) _=enabledTags.Add(tag);
+                        else _=enabledTags.Remove(tag);
                     }
                 }
                 return this;
@@ -179,23 +191,23 @@ namespace AultoLib
         // public static void DebugMessage_Basic(string text) => Log.Message($"{AultoLibMod.DEBUG_LOG_HEADER} {text}");
         // public static void DebugWarning_Basic(string text) => Log.Warning($"{AultoLibMod.DEBUG_LOG_HEADER} {text}");
         // public static void DebugError_Basic(string text) => Log.Error($"{AultoLibMod.DEBUG_LOG_HEADER} {text}");
-        public static string SimplePrefix()
+        public static string SimplePrefix(int frame = 2)
         {
-            MethodBase caller = new StackTrace().GetFrame(2).GetMethod();
+            MethodBase caller = new StackTrace().GetFrame(frame).GetMethod();
             // Assembly callerNamespace = caller.DeclaringType.Assembly;
             string callerNamespace = caller.DeclaringType.Assembly.GetName().Name;
             // return $"<color=orange>[AultoLib] {className}</color>";
-            return $"<color=orange>[{callerNamespace}]</color>"; // now it can be called by other namespaces
+            return $"<color=\"{LogColor.Header}\">[{callerNamespace}]</color>"; // now it can be called by other namespaces
         }
 
-        public static string AdvancedPrefix()
+        public static string AdvancedPrefix(int frame = 2)
         {
-            MethodBase caller = new StackTrace().GetFrame(2).GetMethod();
+            MethodBase caller = new StackTrace().GetFrame(frame).GetMethod();
             // Assembly callerNamespace = caller.DeclaringType.Assembly;
             string callerNamespace = caller.DeclaringType.Assembly.GetName().Name;
             string className = caller.ReflectedType.Name;
             // return $"<color=orange>[AultoLib] {className}</color>";
-            return $"<color=orange>[{callerNamespace}]</color> {className.ColorText(LogColor.ClassName)}"; // now it can be called by other namespaces
+            return $"<color=\"{LogColor.Header}\">[{callerNamespace}]</color> <color=\"{LogColor.ClassName}\">{className}</color>"; // now it can be called by other namespaces
         }
 
         public static void SimpleMessage(string text) => Log.Message($"{SimplePrefix()}  {text}");
@@ -205,9 +217,9 @@ namespace AultoLib
         public static void Message(string text) => Log.Message($"{AdvancedPrefix()}  {text}");
         public static void Warning(string text) => Log.Warning($"{AdvancedPrefix()}  {text}");
         public static void Error(string text) => Log.Error($"{AdvancedPrefix()}  {text}");
-        public static void DebugMessage(string text) => Log.Message($"{AdvancedPrefix()} {DEBUG}  {text}");
-        public static void DebugWarning(string text) => Log.Warning($"{AdvancedPrefix()} {DEBUG}  {text}");
-        public static void DebugError(string text) => Log.Error($"{AdvancedPrefix()} {DEBUG}   {text}");
+        // public static void DebugMessage(string text) => Log.Message($"{AdvancedPrefix()} {DEBUG}  {text}");
+        // public static void DebugWarning(string text) => Log.Warning($"{AdvancedPrefix()} {DEBUG}  {text}");
+        // public static void DebugError(string text) => Log.Error($"{AdvancedPrefix()} {DEBUG}   {text}");
 
 
         public static string ColoredDefInformation(this Def someDef)
@@ -220,7 +232,7 @@ namespace AultoLib
         public static void SimpleErrorOnce(string text, string id)
         {
             if (logIDs.Contains(id)) return;
-            logIDs.Add(id);
+            _=logIDs.Add(id);
             // MethodBase caller = new StackTrace().GetFrame(1).GetMethod();
             // string callerNamespace = caller.DeclaringType.Assembly.GetName().Name;
             // string className = caller.ReflectedType.Name;
@@ -229,36 +241,20 @@ namespace AultoLib
         public static void ErrorOnce(string text, string id)
         {
             if (logIDs.Contains(id)) return;
-            logIDs.Add(id);
+            _=logIDs.Add(id);
             // MethodBase caller = new StackTrace().GetFrame(1).GetMethod();
             // string callerNamespace = caller.DeclaringType.Assembly.GetName().Name;
             // string className = caller.ReflectedType.Name;
             Log.Error($"{AdvancedPrefix()}  {text}");
         }
 
-        public static readonly string header_color = "orange";
-        public const string DEBUG = "<color=aqua>Debug</color>";
-        public static readonly string LOG_HEADER = $"<color={header_color}>[AultoLib]</color>";
-        public static readonly string DEBUG_LOG_HEADER = $"<color={header_color}>[AultoLib] <color=aqua>Debug</color></color>";
-        public static readonly string RESOLVER_HEADER = $"<color={header_color}>[AultoLib:Resolver]</color>";
+        // public static readonly string header_color = "orange";
+        // public const string DEBUG = "<color=aqua>Debug</color>";
+        // public static readonly string LOG_HEADER = $"<color={header_color}>[AultoLib]</color>";
+        // public static readonly string DEBUG_LOG_HEADER = $"<color={header_color}>[AultoLib] <color=aqua>Debug</color></color>";
+        // public static readonly string RESOLVER_HEADER = $"<color={header_color}>[AultoLib:Resolver]</color>";
 
         private static readonly HashSet<string> logIDs = new HashSet<string>();
-
-        // +-----------------------+
-        // |    Color Utilities    |
-        // +-----------------------+
-
-        /// <summary>
-        /// text must be some object that implements ToString<br/>
-        /// some colors and their names here: https://docs.unity3d.com/Packages/com.unity.ugui@2.0/manual/StyledText.html#ColorNames
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public static string ColorText(this object text, string color)
-        {
-            return $"<color=\"{color}\">{text}</color>";
-        }
         
     }
 }

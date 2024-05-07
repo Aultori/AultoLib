@@ -13,11 +13,11 @@ namespace AultoLib.Database
     {
         public static bool TryGetContents(SocietyDef societyDef, string path, out string rawText)
         {
-            // Log.Message($"{Globals.DEBUG_LOG_HEADER} Attempting to load {societyDef.FolderPath}/{path}");
+            // AultoLog.Message($"Attempting to load {societyDef.FolderPath}/{path}");
 
             if (path.NullOrEmpty())
             {
-                // Log.Error($"{Globals.LOG_HEADER} TextFile_Loader.TryGetContents(...)  path is null");
+                // AultoLog.Error($"TextFile_Loader.TryGetContents(...)  path is null");
                 AultoLog.Error("TryGetContents() path is null");
                 rawText = null;
                 return false;
@@ -30,7 +30,7 @@ namespace AultoLib.Database
             }
             if (GrammarDatabase.loadedTextFiles[societyDef.Key]?.TryGetValue(path, out rawText) == true)
             {
-                // Log.Message($"{Globals.DEBUG_LOG_HEADER} loaded {rawText}");
+                // AultoLog.Message($"loaded {rawText}");
                 return true;
             }
 
@@ -52,9 +52,7 @@ namespace AultoLib.Database
         private static void LoadToDatabase(string society_key, string path, string fileText)
         {
             GrammarDatabase.loadedTextFiles[society_key].Add(path, fileText);
-#if DEBUG
-            // Log.Message($"{Globals.DEBUG_LOG_HEADER} Loaded file {society_key} {path}");
-#endif
+            if (AultoLog.DoLog("file loading")) AultoLog.Message($"Loaded file {society_key} {path}");
         }
 
         /// <summary>
@@ -67,18 +65,18 @@ namespace AultoLib.Database
         // Tuple<VirtualDirectory, ModContentPack, string>
         public static IEnumerable<SomeModDirectory> GetDirectories(string directory)
         {
-            // Log.Message($"{Globals.DEBUG_LOG_HEADER} looking for: {directory}");
+            // AultoLog.Message($"looking for: {directory}");
             foreach (ModContentPack mod in LoadedModManager.RunningMods)
             {
-                // Log.Message($"{Globals.DEBUG_LOG_HEADER} Getting Mod Directories {mod.FolderName}");
+                // AultoLog.Message($"Getting Mod Directories {mod.FolderName}");
                 foreach (string text in mod.foldersToLoadDescendingOrder)
                 {
-                    //Log.Message($"{Globals.DEBUG_LOG_HEADER} looking through folder {text}");
+                    //AultoLog.Message($"looking through folder {text}");
                     string path = Path.Combine(text, directory);
                     VirtualDirectory dir = AbstractFilesystem.GetDirectory(path);
                     if (dir.Exists)
                     {
-                        // Log.Message($"{Globals.DEBUG_LOG_HEADER} loading folder {dir.FullPath}");
+                        // AultoLog.Message($"loading folder {dir.FullPath}");
                         yield return new SomeModDirectory { dir = dir, mod = mod, folder = text };
                     }
                 }
@@ -94,20 +92,20 @@ namespace AultoLib.Database
         {
             if (DataIsLoaded(societyDef.Key)) return;
 
-            // Log.Message($"{Globals.DEBUG_LOG_HEADER} Attempting to load data");
+            // AultoLog.Message($"Attempting to load data");
             // data isn't loaded, so
             // path --> fileData
             GrammarDatabase.loadedTextFiles[societyDef.Key] = new CaselessDictionary<string, string>();
             //
-            DeepProfiler.Start($"{Globals.LOG_HEADER} Loading society data: {societyDef.defName} ({societyDef.Key})");
+            DeepProfiler.Start($"{AultoLog.AdvancedPrefix(frame: 1)}  Loading society data: {societyDef.defName} ({societyDef.Key})");
             try
             {
-                // Log.Message($"{Globals.DEBUG_LOG_HEADER} 1");
+                // AultoLog.Message($"1");
                 tmpAlreadyLoadedFiles.Clear();
                 
                 foreach (SomeModDirectory modDir in GetDirectories(societyDef.FolderPath))
                 {
-                    // Log.Message($"{Globals.DEBUG_LOG_HEADER} 2");
+                    // AultoLog.Message($"2");
                     SomeModDirectory localDir = modDir;
                     if (!tmpAlreadyLoadedFiles.ContainsKey(localDir.mod))
                     {
@@ -127,7 +125,7 @@ namespace AultoLib.Database
             }
             catch (Exception e)
             {
-                Log.Error($"{Globals.LOG_HEADER} Exception loading culture data. Exception: {e}");
+                AultoLog.Error($"Exception loading culture data. Exception: {e}");
             }
             finally
             {
@@ -185,7 +183,7 @@ namespace AultoLib.Database
             // get the shortened path and replace \ with /
             shortPath = shortPath.Substring(0, shortPath.Length - Path.GetExtension(shortPath).Length).Replace('\\', '/');
 
-            // Log.Message($"{Globals.DEBUG_LOG_HEADER} loading file {file.FullPath}:  {shortPath}");
+            // AultoLog.Message($"loading file {file.FullPath}:  {shortPath}");
 
             LoadToDatabase(societyDef.Key, shortPath, allText);
         }

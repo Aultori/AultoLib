@@ -29,7 +29,7 @@ namespace AultoLib
             communications.ResolveReferences();
             if (communications != null) thingDef.race.LinkRaceCommunicationsDef(communications);
             if (languageLearningAge != null) thingDef.race.LinkLanguageLearningAge((float) languageLearningAge);
-            if (languages != null) thingDef.race.LinkLanguages(languages);
+            // if (languages != null) thingDef.race.LinkLanguages(languages);
             if (society != null) thingDef.race.LinkDefaultSociety(society);
         }
 
@@ -38,7 +38,7 @@ namespace AultoLib
 
         public SocietyDef society;
 
-        public List<CommunicationLanguageDef> languages;
+        // public List<CommunicationLanguageDef> languages;
 
         public float? languageLearningAge;
 

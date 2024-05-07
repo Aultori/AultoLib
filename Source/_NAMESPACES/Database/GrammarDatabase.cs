@@ -38,7 +38,7 @@ namespace AultoLib.Database
                     if (recipientData.TryGetValue("any", out inter)) return true;
                 }
             }
-            Log.Error($"{Globals.LOG_HEADER} InteractionInstanceDef not found in {category}-->{initiatorSociety}-->{recipientSociety}.");
+            AultoLog.Error($"InteractionInstanceDef not found in {category}-->{initiatorSociety}-->{recipientSociety}.");
             inter = null;
             return false;
         }
@@ -58,10 +58,10 @@ namespace AultoLib.Database
             {
                 if (categoryData.TryGetValue(category, out def)) return true;
                 // no category found. this is an error
-                Log.Error($"{Globals.LOG_HEADER} The category {category} was not found in the fallback society's loadedRulesetDefs");
+                AultoLog.Error($"The category {category} was not found in the fallback society's loadedRulesetDefs");
                 return false;
             }
-            Log.Error($"{Globals.LOG_HEADER} The society {society} does not exist in loadedRulesetDefs.");
+            AultoLog.Error($"The society {society} does not exist in loadedRulesetDefs.");
             return false;
         }
 
@@ -71,7 +71,7 @@ namespace AultoLib.Database
             // if (ResolverInstance.instConstants.TryGetValue(KEY, out value)) return true;
             // if (GrammarDatabase.globalConstants.TryGetValue(KEY, out value)) return true;
             if (ResolverInstance.AllConstants.TryGetValue(KEY, out value)) return true;
-            Log.Error($"{Globals.LOG_HEADER} Constant [{KEY}] not found!");
+            AultoLog.Error($"Constant [{KEY}] not found!");
             return false;
         }
 
@@ -94,10 +94,10 @@ namespace AultoLib.Database
             if (GrammarDatabase.mainSocietyRulesets.TryGetValue(Globals.FALLBACK_SOCIETY_KEY, out ruleset))
             {
                 if (ruleset.TryGetCompoundRule(key, out rule)) return true;
-                Log.Error($"{Globals.LOG_HEADER} key {key} not found in the fallback society's ruleset");
+                AultoLog.Error($"key {key} not found in the fallback society's ruleset");
                 return false;
             }
-            Log.Error($"{Globals.LOG_HEADER} no fallback society found in societyRuleset");
+            AultoLog.Error($"no fallback society found in societyRuleset");
             rule = null;
             return false;
         }
@@ -159,7 +159,7 @@ namespace AultoLib.Database
             if (GrammarDatabase.mainSocietyRulesets.TryGetCompoundRuleFromDict(Globals.FALLBACK_SOCIETY_KEY, ruleKey, out rule)) return true;
             
             // no macro found
-            Log.Error($"{Globals.LOG_HEADER} key \"{ruleKey}\" not found in the fallback society's ruleset");
+            AultoLog.Error($"key \"{ruleKey}\" not found in the fallback society's ruleset");
             rule = null;
             return false;
         }

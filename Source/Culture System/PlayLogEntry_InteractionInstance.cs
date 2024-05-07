@@ -134,6 +134,7 @@ namespace AultoLib
                 // an error is thrown here
                 ResolverInstance.AddConstants(initiatorConstants);
                 ResolverInstance.AddConstants(recipientConstants);
+                ResolverInstance.AddConstants(extraConstants);
                 //ResolverInstance.AddConstants(this.extraConstants);
                 if (AultoLog.DoLog()) AultoLog.Message("got here while resolving 2");
                 ResolverInstance.AddThingSociety("INITIATOR", this.initiatorSociety.Key);

@@ -10,6 +10,7 @@ using AultoLib.Database;
 using UnityEngine;
 using Verse.AI;
 
+
 using static AultoLib.AultoLog;
 
 namespace AultoLib
@@ -102,7 +103,7 @@ namespace AultoLib
 
         public static bool TryInteract(Pawn initiator, Pawn recipient, InteractionCategoryDef category, CommunicationLanguageDef language)
         {
-            if (AultoLog.DoLog()) AultoLog.DebugMessage($"{NameTag(initiator)} {initiator.Society()} tries to interact with {recipient.ToString().ApplyTag(TagType.Name)} {recipient.Society()}. {category} language: {language}");
+            if (AultoLog.DoLog()) AultoLog.Message($"{NameTag(initiator)} {initiator.Society()} tries to interact with {recipient.ToString().ApplyTag(TagType.Name)} {recipient.Society()}. {category} language: {language}");
 
             if (DebugSettings.alwaysSocialFight)
             {
@@ -128,6 +129,7 @@ namespace AultoLib
             {
                 return false;
             }
+
 
             if (intInst.initiatorThought     != null) AddInteractionThought(initiator, recipient, intInst.initiatorThought);
             if (intInst.recipientThought     != null) AddInteractionThought(recipient, initiator, intInst.recipientThought);
@@ -160,13 +162,22 @@ namespace AultoLib
 
             Grammar.Constants extraConstants = new Grammar.Constants();
 
-            string communicationPrefix = language.CommunicationPrefix();
-            if (communicationPrefix != null)
+            if (AultoLibMod.settings.doInteractionHeader)
             {
-                extraConstants.AddConstant("communicationPrefix", communicationPrefix);
+                (IntVec3 vec1, IntVec3 vec2) = (initiator.Position, recipient.Position);
+                (int x, int y) = (vec1.x-vec2.x, vec1.y-vec2.y);
+                double distance = Math.Sqrt(x*x + y*y);
+
+                extraConstants.AddConstant("communicationPrefix", $"[{language}: {language.medium} {distance} units] ");
             }
 
-            PlayLogEntry_InteractionInstance playLogEntry_InteractionInstance = new PlayLogEntry_InteractionInstance(intInst, initiator, recipient, extraRulesets: list);
+            // string communicationPrefix = language.CommunicationPrefix();
+            // if (communicationPrefix != null)
+            // {
+            //     extraConstants.AddConstant("communicationPrefix", communicationPrefix);
+            // }
+
+            PlayLogEntry_InteractionInstance playLogEntry_InteractionInstance = new PlayLogEntry_InteractionInstance(intInst, initiator, recipient, extraRulesets: list, extraConstants: extraConstants);
             Find.PlayLog.Add(playLogEntry_InteractionInstance);
             if (letterDef != null)
             {
@@ -190,13 +201,13 @@ namespace AultoLib
 
             if (InteractedTooRecentlyToInteract())
             {
-                AultoLog.DebugWarning("Interacted too recently.");
+                AultoLog.Warning("Interacted too recently.");
                 return false;
             }
 
             if (!CommunicationUtility.CanInitiateSocialInteraction(pawn))
             {
-                AultoLog.DebugWarning("Can't initiate social interactions.");
+                AultoLog.Warning("Can't initiate social interactions.");
                 return false;
             }
 
@@ -242,7 +253,7 @@ namespace AultoLib
             mapPawnsInFaction = new List<Pawn>(pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction));
             mapPawnsInFaction.Shuffle<Pawn>();
 
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("Trying to find a pawn to interact with.");
+            if (AultoLog.DoLog()) AultoLog.Message("Trying to find a pawn to interact with.");
 
             foreach (Pawn recipient in mapPawnsInFaction)
             {
@@ -371,6 +382,6 @@ namespace AultoLib
         public  const int   const_DirectTalkInteractInterval = 320;
         public  const float const_IdeoExposurePointsInteraction = 0.5f;
 
-        private static List<Pawn> workingList; // set this to the 
+        // private static List<Pawn> workingList; // set this to the 
     }
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
+	<packageId>aultori.AultoLib</packageId>
 	<name>AultoLib</name>
 	<author>Aultori</author>
+	<description>Core library for RimVilos and other mods</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
@@ -16,10 +18,9 @@
 		<li>Ludeon.RimWorld.Ideology</li>
 		<li>Ludeon.Rimworld.Biotech</li>
 		<li>brrainz.harmony</li>
+		<li>Jaxe.Bubbles</li>
 	</loadAfter>
 	<supportedVersions>
 		<li>1.5</li>
 	</supportedVersions>
-	<packageId>aultori.AultoLib</packageId>
-	<description>core library for RimVilos and other mods</description>
 </ModMetaData>

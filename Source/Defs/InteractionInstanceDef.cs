@@ -33,7 +33,8 @@ namespace AultoLib
         {
             get
             {
-                return (this.symbolTex) ?? (this.symbolTex = ContentFinder<Texture2D>.Get(this.symbol, true));
+                this.symbolTex ??= ContentFinder<Texture2D>.Get(this.symbol, true);
+                return this.symbolTex;
             }
         }
 
@@ -42,12 +43,14 @@ namespace AultoLib
             InteractionSymbolSource interactionSymbolSource = this.symbolSource;
             if (interactionSymbolSource != InteractionSymbolSource.InitiatorIdeo)
             {
-                if (interactionSymbolSource != InteractionSymbolSource.InitiatorFaction) return this.Symbol;
+                if (interactionSymbolSource != InteractionSymbolSource.InitiatorFaction)
+                    return this.Symbol;
                 return initiatorFaction?.def.FactionIcon;
             }
             else
             {
-                if (Find.IdeoManager.classicMode) return this.Symbol;
+                if (Find.IdeoManager.classicMode)
+                    return this.Symbol;
                 return initatorIdeo?.Icon;
             }
         }
@@ -64,7 +67,7 @@ namespace AultoLib
         public override void ResolveReferences()
         {
             base.ResolveReferences();
-            if (this.interactionMote == null) this.interactionMote = ThingDefOf.Mote_Speech;
+            this.interactionMote ??= ThingDefOf.Mote_Speech;
             InteractionInstanceDef_Loader.Load(this);
 
             AultoLog.Message($"loaded {AultoLog.ColoredDefInformation(this)} to the database");

@@ -46,11 +46,11 @@ namespace AultoLib
 
         // medium defName is used as the key
         [Unsaved(false)]
-        private Dictionary<CommunicationMediumDef, List<Transmitter>> cachedTransmitters;
+        private Dictionary<CommunicationMediumDef, List<Transmitter>> cachedTransmitters; // medium def
         [Unsaved(false)]
-        private Dictionary<CommunicationMediumDef, List<Receiver>> cachedReceivers;
+        private Dictionary<CommunicationMediumDef, List<Receiver>> cachedReceivers; // medium def
         [Unsaved(false)]
-        private Dictionary<CommunicationLanguageDef, LanguageData> cachedLanguages;
+        private Dictionary<CommunicationLanguageDef, LanguageData> cachedLanguages; // language Def
 
         // +---------------+
         // |    Methods    |
@@ -74,6 +74,7 @@ namespace AultoLib
             // load the cached stuff
             this.cachedReceivers = new Dictionary<CommunicationMediumDef, List<Receiver>>();
             this.cachedTransmitters = new Dictionary<CommunicationMediumDef, List<Transmitter>>();
+            this.cachedLanguages = new Dictionary<CommunicationLanguageDef, LanguageData>();
 
             foreach (LanguageData langData in this.languages)
             {

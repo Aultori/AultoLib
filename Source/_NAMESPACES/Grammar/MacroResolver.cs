@@ -28,9 +28,9 @@ namespace AultoLib.Grammar
             // get the segments, then call ExpandRecurive(segments)
             HashSet<string> something = new HashSet<string>();
             ExtendedRule rule = compoundRule.RandomPossiblyResolvableEntry(something);
-            if (AultoLog.DoLog("debug1")) AultoLog.DebugMessage($"got rule {rule.keyword}");
+            if (AultoLog.DoLog("debug1")) AultoLog.Message($"got rule {rule.keyword}");
             RuleSegments segs = rule.GetSegments();
-            if (AultoLog.DoLog("debug1")) AultoLog.DebugMessage("got segments");
+            if (AultoLog.DoLog("debug1")) AultoLog.Message("got segments");
             // test segmetns
 
             logSb = new StringBuilder();
@@ -62,7 +62,7 @@ namespace AultoLib.Grammar
              // AultoLog.Message(expansion);
 
             // wouldn't have gotten here if there was an error
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("expansion successful");
+            if (AultoLog.DoLog()) AultoLog.Message("expansion successful");
             return true;
         }
 

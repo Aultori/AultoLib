@@ -18,7 +18,7 @@ namespace AultoLib.Grammar
             TaggedString taggedString = "";
             if (addRelationInfoSymbol)
             {
-                PawnRelationUtility.TryAppendRelationsWithColonistsInfo(ref taggedString, pawn);
+                _= PawnRelationUtility.TryAppendRelationsWithColonistsInfo(ref taggedString, pawn);
             }
             PawnData pawnData = new PawnData
             {
@@ -165,7 +165,9 @@ namespace AultoLib.Grammar
             yield return MakeConstant("ageSpentInStasis", (DATA.chronologicalAge - DATA.age).ToString());
             yield return MakeConstant("formerlyColonist", "False");
 
-            if (addSkills && DATA.pawn != null)
+            bool skillsAdded = addSkills && DATA.pawn != null;
+            yield return MakeConstant("skillsAdded", skillsAdded.ToString());
+            if (skillsAdded)
             {
                 Pawn_SkillTracker skills = DATA.pawn.skills;
 

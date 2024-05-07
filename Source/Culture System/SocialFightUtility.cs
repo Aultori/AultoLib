@@ -60,6 +60,7 @@ namespace AultoLib
         // Same functionallity as the default method
         public static float RimWorld_SocialFightChance(InteractionInstanceDef intInstDef, Pawn initiator, Pawn victim)
         {
+            if (intInstDef == null || initiator == null || victim == null) return 0f;
             if (!SocialFightPossible(initiator, victim)) return 0f;
 
             float chance = intInstDef.socialFightBaseChance;

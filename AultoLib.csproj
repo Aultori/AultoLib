@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net481</TargetFramework>
+		<LangVersion>8.0</LangVersion>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -55,9 +56,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Reference Include="Bubbles">
-	    <HintPath>..\..\..\..\workshop\content\294100\1516158345\Assemblies\Bubbles.dll</HintPath>
-	  </Reference>
+	  <None Include="1.5\Assemblies\AultoLib.dll" />
+	  <None Include="1.5\Assemblies\AultoLib.pdb" />
+	  <None Include="1.5\Assemblies\Bubbles.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 

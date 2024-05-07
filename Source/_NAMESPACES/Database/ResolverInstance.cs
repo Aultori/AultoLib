@@ -17,23 +17,23 @@ namespace AultoLib.Database
         // instRuleset and instConstants technically don't need to be set for the resolver to work, idk why anyone wouldn't set them
         public static void Reset()
         {
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("RESETTING RESOLVER");
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("incrimenting runID");
+            if (AultoLog.DoLog()) AultoLog.Message("RESETTING RESOLVER");
+            if (AultoLog.DoLog()) AultoLog.Message("incrimenting runID");
             ResolverInstance.runID++;
 
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("clearing extra tags");
+            if (AultoLog.DoLog()) AultoLog.Message("clearing extra tags");
             extraTagSet.Clear();
 
 
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("resetting active society");
+            if (AultoLog.DoLog()) AultoLog.Message("resetting active society");
             Globals.ACTIVE_SOCIETY_KEY = Globals.FALLBACK_SOCIETY_KEY;
 
             // instRuleset = new Ruleset(); // Rulesets can't be cleared
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("resetting instance society rulesets");
+            if (AultoLog.DoLog()) AultoLog.Message("resetting instance society rulesets");
             instSocietyRulesets.Clear();
 
             //GrammarDatabase.loadedSocietyRulesets[Globals.INSTANCE_SOCIETY_KEY] = new Ruleset();
-            if (AultoLog.DoLog()) AultoLog.DebugMessage("clearing constances");
+            if (AultoLog.DoLog()) AultoLog.Message("clearing constances");
             instConstants.Clear();
             constantsCached = false;
         }
@@ -80,7 +80,7 @@ namespace AultoLib.Database
             //instRuleset.Add(ruleset);
             foreach (CompoundRule compoundRule in ruleset.RulesPlusDefs.Values)
             {
-                if (AultoLog.DoLog()) AultoLog.DebugMessage("adding CompoundRule: {compoundRule.keyword}");
+                if (AultoLog.DoLog()) AultoLog.Message("adding CompoundRule: {compoundRule.keyword}");
                 instSocietyRulesets[Globals.INSTANCE_SOCIETY_KEY].Add(compoundRule);
             }
         }
@@ -96,14 +96,14 @@ namespace AultoLib.Database
         // like for INITIATOR and RECIPIENT society
         public static void AddThingSociety(string name, string society)
         {
-            if (AultoLog.DoLog()) AultoLog.DebugMessage($"adding society {name} {society}");
+            if (AultoLog.DoLog()) AultoLog.Message($"adding society {name} {society}");
             if (!instSocietyRulesets.ContainsKey(name))
                 instSocietyRulesets[name] = new Ruleset();
             if (GrammarDatabase.mainSocietyRulesets.TryGetValue(society, out Ruleset ruleset))
                 instSocietyRulesets[name].Add(ruleset);
             else
             {
-                if (AultoLog.DoLog()) AultoLog.DebugWarning($"\"{society}\" not found in GrammarDatabase");
+                if (AultoLog.DoLog()) AultoLog.Warning($"\"{society}\" not found in GrammarDatabase");
                 return;
             }
         }

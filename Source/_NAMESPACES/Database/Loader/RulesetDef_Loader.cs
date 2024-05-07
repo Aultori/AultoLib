@@ -16,7 +16,7 @@ namespace AultoLib.Database
         //     if (def.cachedRuleset != null) return;
         //     if (def.ruleset?.initialized == false)
         //     {
-        //         Log.Error($"{Globals.LOG_HEADER} tried to initialize a RulesetDef with an uninitialized Ruleset.");
+        //         AultoLog.Error($"tried to initialize a RulesetDef with an uninitialized Ruleset.");
         //         return;
         //     }
 
@@ -49,7 +49,7 @@ namespace AultoLib.Database
         public static void LoadToDatabase(string society, string category, RulesetDef def)
         {
 #if DEBUG
-            Log.Message($"{Globals.DEBUG_LOG_HEADER} Loaded RulesetDef: {society}-->{category}-->{def.defName}");
+            AultoLog.Message($"Loaded RulesetDef: {society}-->{category}-->{def.defName}");
 #endif
             var societyData = GrammarDatabase.mainRulesetDefs;
             if (!societyData.ContainsKey(society))
