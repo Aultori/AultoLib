@@ -15,22 +15,22 @@ Defs:
       recipientThought: Chitchat
       logRulesInitiator {
          rulesStrings {
-            li: r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [TalkTopicLight].
-            li: r_logentry->[INITIATOR_nameDef] [talkedabout] [TalkTopicLight] with [RECIPIENT_nameDef].
-            li: r_logentry(p=0.8)->[INITIATOR_nameDef] [commentedabout] [TalkTopicLight] to [RECIPIENT_nameDef].
+            li = r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [TalkTopicLight].
+            li = r_logentry->[INITIATOR_nameDef] [talkedabout] [TalkTopicLight] with [RECIPIENT_nameDef].
+            li = r_logentry(p=0.8)->[INITIATOR_nameDef] [commentedabout] [TalkTopicLight] to [RECIPIENT_nameDef].
 
-            li: talkedabout(p=4)->chatted about
-            li: talkedabout->shared a word about
-            li: talkedabout->spoke about
-            li: talkedabout->gabbed about
-            li: talkedabout->talked about
-            li: talkedabout->quipped about
+            li = talkedabout(p=4)->chatted about
+            li = talkedabout->shared a word about
+            li = talkedabout->spoke about
+            li = talkedabout->gabbed about
+            li = talkedabout->talked about
+            li = talkedabout->quipped about
 
-            li: commentedabout->said something about
-            li: commentedabout->said a word about
-            li: commentedabout->made a comment about
-            li: commentedabout->commented about
-            li: commentedabout->told a joke about
+            li = commentedabout->said something about
+            li = commentedabout->said a word about
+            li = commentedabout->made a comment about
+            li = commentedabout->commented about
+            li = commentedabout->told a joke about
          }
       }
    }
@@ -51,22 +51,22 @@ Defs:
       recipientThought: DeepTalk
       logRulesInitiator {
          rulesStrings {
-            li: r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].
-            li: r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].
+            li = r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].
+            li = r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].
 
-            li: talkedabout->communicated thoughts about
-            li: talkedabout->exchanged thoughts about
-            li: talkedabout->exchanged ideas about
-            li: talkedabout->shared views on
-            li: talkedabout->shared beliefs on
-            li: talkedabout->discussed the topic of
-            li: talkedabout->had a heartfelt conversation about
-            li: talkedabout->talked quietly about
-            li: talkedabout->talked deeply about
-            li: talkedabout->connected on the topic of
+            li = talkedabout->communicated thoughts about
+            li = talkedabout->exchanged thoughts about
+            li = talkedabout->exchanged ideas about
+            li = talkedabout->shared views on
+            li = talkedabout->shared beliefs on
+            li = talkedabout->discussed the topic of
+            li = talkedabout->had a heartfelt conversation about
+            li = talkedabout->talked quietly about
+            li = talkedabout->talked deeply about
+            li = talkedabout->connected on the topic of
 
-            li: subject->[INITIATOR|TalkTopicHeavy]
-            li: subject->[RECIPIENT|TalkTopicHeavy]
+            li = subject->[INITIATOR|TalkTopicHeavy]
+            li = subject->[RECIPIENT|TalkTopicHeavy]
          }
       }
    }
@@ -85,23 +85,23 @@ Defs:
       recipientThought: Slighted
       logRulesInitiator {
          rulesStrings {
-            li: r_logentry->[INITIATOR_nameDef] [madefunof] [target]'s [RECIPIENT|PersonalCharacteristic].
+            li = r_logentry->[INITIATOR_nameDef] [madefunof] [target]'s [RECIPIENT|PersonalCharacteristic].
 
-            li: target(p=4)->[RECIPIENT_nameDef]
-            li: target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]
+            li = target(p=4)->[RECIPIENT_nameDef]
+            li = target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]
 
-            li: madefunof->made fun of
-            li: madefunof->disrespected
-            li: madefunof->subtly scorned
-            li: madefunof->subtly shamed
-            li: madefunof->spoke badly of
-            li: madefunof->spoke negatively of
-            li: madefunof->laughed at
-            li: madefunof->sniggered at
-            li: madefunof->implied negative things about
-            li: madefunof->belittled
-            li: madefunof->made a contemptuous remark about
-            li: madefunof->offered a backhanded compliment about
+            li = madefunof->made fun of
+            li = madefunof->disrespected
+            li = madefunof->subtly scorned
+            li = madefunof->subtly shamed
+            li = madefunof->spoke badly of
+            li = madefunof->spoke negatively of
+            li = madefunof->laughed at
+            li = madefunof->sniggered at
+            li = madefunof->implied negative things about
+            li = madefunof->belittled
+            li = madefunof->made a contemptuous remark about
+            li = madefunof->offered a backhanded compliment about
          }
       }
    }
@@ -120,26 +120,26 @@ Defs:
       recipientThought: Insulted
       logRulesInitiator {
          rulesStrings {
-            li: r_logentry(p=3)->[INITIATOR_nameDef] [insulted] [target]'s [RECIPIENT|PersonalCharacteristic].
-            li: r_logentry->[INITIATOR_nameDef] compared [target] to a [insultcomparison].
-            li: r_logentry->[INITIATOR_nameDef] called [target] a [insultcomparison].
+            li = r_logentry(p=3)->[INITIATOR_nameDef] [insulted] [target]'s [RECIPIENT|PersonalCharacteristic].
+            li = r_logentry->[INITIATOR_nameDef] compared [target] to a [insultcomparison].
+            li = r_logentry->[INITIATOR_nameDef] called [target] a [insultcomparison].
 
-            li: target(p=4)->[RECIPIENT_nameDef]
-            li: target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]
+            li = target(p=4)->[RECIPIENT_nameDef]
+            li = target->[RECIPIENT_nameDef]'s [RECIPIENT|PersonFamily]
 
-            li: insulted(p=3)->insulted
-            li: insulted->openly insulted
-            li: insulted->loudly insulted
-            li: insulted->flagrantly insulted
-            li: insulted->directly insulted
-            li: insulted->viciously insulted
-            li: insulted->flagrantly disrespected
-            li: insulted->slandered
-            li: insulted->hurled invective about
-            li: insulted->derided
+            li = insulted(p=3)->insulted
+            li = insulted->openly insulted
+            li = insulted->loudly insulted
+            li = insulted->flagrantly insulted
+            li = insulted->directly insulted
+            li = insulted->viciously insulted
+            li = insulted->flagrantly disrespected
+            li = insulted->slandered
+            li = insulted->hurled invective about
+            li = insulted->derided
 
-            li: insultcomparison(p=2)->[Animal]
-            li: insultcomparison->[Enemy]
+            li = insultcomparison(p=2)->[Animal]
+            li = insultcomparison->[Enemy]
          }
       }
    }
@@ -150,7 +150,7 @@ Defs:
       category: none
       ruleset {
          rulesStrings {
-            li: sent->This drove [RECIPIENT_nameDef] into a rage and [RECIPIENT_pronoun] began a fight!
+            li = sent->This drove [RECIPIENT_nameDef] into a rage and [RECIPIENT_pronoun] began a fight!
          }
       }
    }
@@ -167,21 +167,21 @@ Defs:
       // addSkills: true
       logRulesInitiator {
          rulesStrings {
-            li: r_logentry->[INITIATOR_nameDef] [complimented] [RECIPIENT_nameDef]'s [RECIPIENT|PersonalCharacteristic].
+            li = r_logentry->[INITIATOR_nameDef] [complimented] [RECIPIENT_nameDef]'s [RECIPIENT|PersonalCharacteristic].
         
-            li: complimented(p=3)->complimented
-            li: complimented->praised
-            li: complimented->commended
-            li: complimented->lauded
-            li: complimented->applauded
-            li: complimented->celebrated
-            li: complimented->saluted
-            li: complimented->spoke kindly of
-            li: complimented->expressed good things about
-            li: complimented->offered kinds words about
-            li: complimented->verbally appreciated
-            li: complimented->expressed appreciation for
-            li: complimented->said good things about
+            li = complimented(p=3)->complimented
+            li = complimented->praised
+            li = complimented->commended
+            li = complimented->lauded
+            li = complimented->applauded
+            li = complimented->celebrated
+            li = complimented->saluted
+            li = complimented->spoke kindly of
+            li = complimented->expressed good things about
+            li = complimented->offered kinds words about
+            li = complimented->verbally appreciated
+            li = complimented->expressed appreciation for
+            li = complimented->said good things about
          }
       }
    }

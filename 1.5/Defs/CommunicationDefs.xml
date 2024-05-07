@@ -1,63 +1,56 @@
-<?xml version="1.0" encoding="utf-8" ?><Defs>
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
   
-  <Def Class="AultoLib.CommunicationMediumDef">
-    <defName>Air</defName>
-    <workerClass>AultoLib.CommunicationMediumWorker_Air</workerClass>
-  </Def>
+  <defName>Air</defName>
+  <workerClass>AultoLib.CommunicationMediumWorker_Air</workerClass>
   
-  <Def Class="AultoLib.CommunicationMediumDef">
-    <defName>EMWaves</defName>
-    <workerClass>AultoLib.CommunicationMediumWorker_EMWaves</workerClass>
-  </Def>
+  <defName>EMWaves</defName>
+  <workerClass>AultoLib.CommunicationMediumWorker_EMWaves</workerClass>
   
-  <Def Class="AultoLib.CommunicationMediumDef">
-    <defName>MagneticField</defName>
-    <workerClass>AultoLib.CommunicationMediumWorker_MagneticField</workerClass>
-  </Def>
+  <defName>MagneticField</defName>
+  <workerClass>AultoLib.CommunicationMediumWorker_MagneticField</workerClass>
   
   
-  <Def Class="AultoLib.CommunicationLanguageDef">
-    <defName>Common</defName>
-    <label>Common</label>
-    <medium>Air</medium>
-    <knownByDefault>true</knownByDefault>
-    
-    
-    <!-- Def <AultoLib.CommunicationRecieverDef> -->
-    <!-- defName: SoundReciever -->
-    <!-- medium: Air -->
-    <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_SoundReciever -->
-    
-    <!-- Def <AultoLib.CommunicationRecieverDef> -->
-    <!-- defName: EMReciever -->
-    <!-- medium: EMWaves -->
-    <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_EMReciever -->
-    
-    <!-- Def <AultoLib.CommunicationRecieverDef> -->
-    <!-- defName: Magnetoreception -->
-    <!-- medium: MagneticField -->
-    <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_Magnetoreception -->
-    
-    <!-- Def <AultoLib.CommunicationTransmitterDef> -->
-    <!-- defName: SoundPlayback -->
-    <!-- medium: Air -->
-    <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_SoundPlayback -->
-    
-    <!-- Def <AultoLib.CommunicationTransmitterDef> -->
-    <!-- defName: Vocalization -->
-    <!-- medium: Air -->
-    <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Vocalization -->
-    
-    <!-- Def <AultoLib.CommunicationTransmitterDef> -->
-    <!-- defName: EMBroadcaster -->
-    <!-- medium: EMWaves -->
-    <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_EMBroadcaster -->
-    
-    <!-- Def <AultoLib.CommunicationTransmitterDef> -->
-    <!-- defName: Magnetism -->
-    <!-- medium: MagneticField -->
-    <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Magnetism -->
-    
-    
-  </Def>
+  <defName>Common</defName>
+  <label>Common</label>
+  <medium>Air</medium>
+  <knownByDefault>true</knownByDefault>
+  
+  
+  <!-- Def <AultoLib.CommunicationRecieverDef> -->
+  <!-- defName: SoundReciever -->
+  <!-- medium: Air -->
+  <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_SoundReciever -->
+  
+  <!-- Def <AultoLib.CommunicationRecieverDef> -->
+  <!-- defName: EMReciever -->
+  <!-- medium: EMWaves -->
+  <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_EMReciever -->
+  
+  <!-- Def <AultoLib.CommunicationRecieverDef> -->
+  <!-- defName: Magnetoreception -->
+  <!-- medium: MagneticField -->
+  <!-- recieverWorkerClass: AultoLib.CommunicationRecieverWorker_Magnetoreception -->
+  
+  <!-- Def <AultoLib.CommunicationTransmitterDef> -->
+  <!-- defName: SoundPlayback -->
+  <!-- medium: Air -->
+  <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_SoundPlayback -->
+  
+  <!-- Def <AultoLib.CommunicationTransmitterDef> -->
+  <!-- defName: Vocalization -->
+  <!-- medium: Air -->
+  <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Vocalization -->
+  
+  <!-- Def <AultoLib.CommunicationTransmitterDef> -->
+  <!-- defName: EMBroadcaster -->
+  <!-- medium: EMWaves -->
+  <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_EMBroadcaster -->
+  
+  <!-- Def <AultoLib.CommunicationTransmitterDef> -->
+  <!-- defName: Magnetism -->
+  <!-- medium: MagneticField -->
+  <!-- transmitterWorkerClass: AultoLib.CommunicationTransmitterWorker_Magnetism -->
+  
+  
 </Defs>
